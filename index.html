@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Misteri Obat Sang Raja • Aturan & Cara Bermain</title>
+<style>
+  :root{
+    --bg:#f4efe3;
+    --paper:#fffdf7;
+    --ink:#29251f;
+    --muted:#6f675b;
+    --gold:#b8892f;
+    --gold-dark:#7d5b18;
+    --green:#2f7d4b;
+    --red:#a93632;
+    --yellow:#b27b17;
+    --line:#ded4c2;
+    --shadow:0 10px 28px rgba(60,45,25,.10);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at top, rgba(184,137,47,.10), transparent 34rem),
+      var(--bg);
+    color:var(--ink);
+    font-family:Georgia,"Times New Roman",serif;
+    line-height:1.75;
+  }
+  .hero{
+    padding:70px 20px 55px;
+    text-align:center;
+    background:linear-gradient(135deg,#332719,#5b431e 55%,#2d2419);
+    color:#fff9e9;
+    border-bottom:5px solid var(--gold);
+    position: relative;
+  }
+  .hero .kelompok-badge {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    background: rgba(255,249,233,0.15);
+    backdrop-filter: blur(6px);
+    border: 1px solid var(--gold);
+    color: #f7e9c3;
+    padding: 8px 18px;
+    border-radius: 40px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+  }
+  .crown{font-size:56px;line-height:1}
+  .hero h1{
+    margin:16px 0 6px;
+    font-size:clamp(2.1rem,6vw,4rem);
+    letter-spacing:.04em;
+  }
+  .hero .subjudul{
+    margin:0 0 10px;
+    color:#eadfca;
+    font-size:1.3rem;
+    font-weight: normal;
+    font-style: italic;
+  }
+  .hero p{
+    margin:0;
+    color:#eadfca;
+    font-size:1.08rem;
+  }
+  .container{
+    width:min(1100px,calc(100% - 30px));
+    margin:30px auto 70px;
+  }
+  .toc{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:22px;
+    box-shadow:var(--shadow);
+    margin-bottom:28px;
+  }
+  .toc h2{margin-top:0;color:var(--gold-dark)}
+  .toc-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:8px 20px;
+  }
+  .toc a{
+    color:var(--gold-dark);
+    text-decoration:none;
+    padding:4px 0;
+  }
+  .toc a:hover{text-decoration:underline}
+  section{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:28px;
+    margin:22px 0;
+    box-shadow:var(--shadow);
+  }
+  h2{
+    color:var(--gold-dark);
+    font-size:1.65rem;
+    border-bottom:2px solid var(--line);
+    padding-bottom:8px;
+    margin-top:0;
+  }
+  h3{color:#4b3b24;margin-bottom:8px}
+  .side{
+    border-left:6px solid;
+    padding:18px 20px;
+    margin:18px 0;
+    border-radius:12px;
+    background:#faf7ef;
+  }
+  .good{border-color:var(--green)}
+  .evil{border-color:var(--red)}
+  .neutral{border-color:var(--yellow)}
+  .role-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:15px;
+  }
+  .role{
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px;
+    background:#fffefa;
+  }
+  .role h3{margin-top:0}
+  .role.good h3{color:var(--green)}
+  .role.evil h3{color:var(--red)}
+  .role.neutral h3{color:var(--yellow)}
+  .quote{
+    border-left:4px solid var(--gold);
+    background:#f8f2e4;
+    padding:12px 16px;
+    margin:14px 0;
+    font-style:italic;
+  }
+  .result{
+    display:inline-block;
+    padding:6px 12px;
+    border-radius:999px;
+    font-weight:bold;
+    margin:4px 0;
+  }
+  .result.good{background:#e1f1e6;color:#23643b;border:0}
+  .result.evil{background:#f5dfde;color:#8e2b27;border:0}
+  .result.neutral{background:#f6ebcd;color:#8b6111;border:0}
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:14px 0;
+    overflow:hidden;
+    border-radius:10px;
+  }
+  th,td{
+    border:1px solid var(--line);
+    padding:11px 12px;
+    text-align:left;
+  }
+  th{background:#eee5d4}
+  .flow{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    margin-top:18px;
+  }
+  .flow .box{
+    width:min(650px,100%);
+    text-align:center;
+    padding:12px 16px;
+    border:1px solid var(--line);
+    border-radius:12px;
+    background:#fffefa;
+    font-weight:bold;
+  }
+  .arrow{color:var(--gold-dark);font-size:1.4rem}
+  .warning{
+    background:#fff5d9;
+    border:1px solid #e3c778;
+    border-radius:14px;
+    padding:18px 20px;
+  }
+  footer{
+    text-align:center;
+    color:var(--muted);
+    padding:20px;
+    border-top: 1px solid var(--line);
+    margin-top: 30px;
+  }
+  footer .footer-kelompok {
+    font-weight: bold;
+    color: var(--gold-dark);
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+  }
+  @media(max-width:600px){
+    section{padding:20px}
+    .hero{padding:48px 15px 40px}
+    .container{width:min(100% - 18px,1100px)}
+    .hero .kelompok-badge {
+      position: static;
+      display: inline-block;
+      margin-bottom: 15px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="kelompok-badge">✨ Tugas Kelompok 6</div>
+  <div class="crown">👑</div>
+  <h1>Misteri Obat Sang Raja</h1>
+  <div class="subjudul">Aturan & Cara Bermain</div>
+  <p>Permainan Fisik Deduksi Sosial — Terinspirasi dari Avalon • 20 Pemain</p>
+</header>
+
+<main class="container">
+
+<nav class="toc" aria-label="Daftar isi">
+  <h2>📜 Daftar Isi</h2>
+  <div class="toc-grid">
+    <a href="#latar">1. Latar Cerita</a>
+    <a href="#jumlah">2. Jumlah Pemain &amp; Peran</a>
+    <a href="#kemenangan">3. Kondisi Kemenangan</a>
+    <a href="#persiapan">4. Persiapan Permainan</a>
+    <a href="#pembukaan">5. Pembukaan Peran</a>
+    <a href="#penjaga">6. Penjaga</a>
+    <a href="#mayor-detektif">7. Mayor &amp; Detektif</a>
+    <a href="#jahat">8. Sisi Jahat</a>
+    <a href="#pangeran">9. Pangeran</a>
+    <a href="#tim">10. Pemilihan Tim</a>
+    <a href="#eksplorasi">11. Eksplorasi</a>
+    <a href="#sabotase">12. Sabotase</a>
+    <a href="#batas">13. Batas Sabotase</a>
+    <a href="#engineer">14. Engineer</a>
+    <a href="#komandan">15. Komandan</a>
+    <a href="#professor">16. Profesor</a>
+    <a href="#mayor">17. Mayor</a>
+    <a href="#detektif">18. Detektif</a>
+    <a href="#penjaga-role">19. Penjaga</a>
+    <a href="#ksatria">20. Ksatria</a>
+    <a href="#spy">21. Spy</a>
+    <a href="#blackjack">22. Blackjack</a>
+    <a href="#mordred">23. Mordred</a>
+    <a href="#penjahat">24. Penjahat</a>
+    <a href="#joker">25. Joker</a>
+    <a href="#seeker">26. Spesial Seeker</a>
+    <a href="#pergantian">27. Pergantian Pangeran</a>
+    <a href="#batas-permainan">28. Batas Permainan</a>
+    <a href="#baik-menang">29. Kemenangan Sisi Baik</a>
+    <a href="#alur">30. Ringkasan Alur</a>
+    <a href="#panitia">⚠️ Catatan Panitia</a>
+  </div>
+</nav>
+
+<section id="latar">
+<h2>1. Latar Cerita</h2>
+<p>Raja kerajaan jatuh sakit parah. Untuk menyembuhkannya, kerajaan mendatangkan seorang Profesor yang mengetahui cara membuat obat khusus.</p>
+<p>Namun, obat tersebut membutuhkan <strong>3 tanaman langka</strong>.</p>
+<p>Kerajaan kemudian merekrut 19 kesatria untuk menemani Profesor dalam mencari ketiga tanaman tersebut.</p>
+<p>Tanpa diketahui kerajaan, di antara 20 orang tersebut terdapat orang-orang dari pihak jahat yang ingin menggagalkan ekspedisi.</p>
+<p>Selain pihak baik dan pihak jahat, terdapat juga beberapa orang netral yang mempunyai tujuan mereka sendiri.</p>
+</section>
+
+<section id="jumlah">
+<h2>2. Jumlah Pemain dan Peran</h2>
+<p><strong>Total pemain: 20 orang.</strong></p>
+
+<div class="side good">
+<h3>🟢 Sisi Baik — 12 orang</h3>
+<ol>
+<li>Profesor</li>
+<li>Mayor</li>
+<li>Detektif</li>
+<li>Penjaga</li>
+<li>Engineer</li>
+<li>Komandan</li>
+<li>Kesatria ×6</li>
+</ol>
+</div>
+
+<div class="side evil">
+<h3>🔴 Sisi Jahat — 6 orang</h3>
+<ol>
+<li>Spy</li>
+<li>Blackjack</li>
+<li>Mordred</li>
+<li>Penjahat ×3</li>
+</ol>
+</div>
+
+<div class="side neutral">
+<h3>🟡 Sisi Netral — 2 orang</h3>
+<ol>
+<li>Joker</li>
+<li>Spesial Seeker</li>
+</ol>
+</div>
+
+<p><strong>Total: 12 + 6 + 2 = 20 pemain.</strong></p>
+</section>
+
+<section id="kemenangan">
+<h2>3. Kondisi Kemenangan</h2>
+
+<div class="side good">
+<h3>🟢 Sisi Baik</h3>
+<p>Sisi baik harus berhasil membawa pulang <strong>3 tanaman</strong> melalui eksplorasi.</p>
+<p>Namun, setelah tanaman ketiga berhasil dikumpulkan, Blackjack masih mendapatkan kesempatan terakhir untuk menebak salah satu sumber informasi utama pihak baik.</p>
+<p><span class="result good">Jika Blackjack salah → Sisi Baik Menang.</span></p>
+<p><span class="result evil">Jika Blackjack benar → Sisi Jahat Menang.</span></p>
+</div>
+
+<div class="side evil">
+<h3>🔴 Sisi Jahat</h3>
+<p>Sisi jahat menang apabila:</p>
+<ol>
+<li>Berhasil menggagalkan 3 eksplorasi, atau</li>
+<li>Setelah 3 tanaman terkumpul, Blackjack berhasil menebak Profesor atau Detektif dengan benar.</li>
+</ol>
+</div>
+
+<div class="side neutral">
+<h3>🟡 Sisi Netral</h3>
+<p>Joker dan Spesial Seeker memiliki kondisi kemenangan masing-masing.</p>
+</div>
+</section>
+
+<section id="persiapan">
+<h2>4. Persiapan Permainan</h2>
+<p>20 pemain duduk membentuk lingkaran.</p>
+<ul>
+<li>1 panitia berada di dalam lingkaran.</li>
+<li>1 panitia berada di luar lingkaran.</li>
+</ul>
+<p>Seluruh pemain menutup mata dan menundukkan kepala.</p>
+<p>Panitia di dalam lingkaran menunjuk pemain satu per satu. Panitia di luar lingkaran menyebutkan peran pemain yang ditunjuk sehingga pemain tersebut mengetahui perannya.</p>
+<p>Setelah seluruh peran dibagikan, semua pemain kembali menutup mata dan menundukkan kepala.</p>
+</section>
+
+<section id="pembukaan">
+<h2>5. Pembukaan Peran — Profesor</h2>
+<div class="quote">"Profesor, buka mata."</div>
+<p>Profesor membuka mata.</p>
+<p>Panitia kemudian menunjuk 5 pemain sisi jahat yang dapat dilihat oleh Profesor:</p>
+<ul>
+<li>Spy</li>
+<li>Blackjack</li>
+<li>3 Penjahat</li>
+</ul>
+<p><strong>Mordred tidak ditunjukkan kepada Profesor.</strong></p>
+<p>Dengan demikian Profesor mengetahui 5 anggota sisi jahat, tetapi tidak mengetahui siapa Mordred.</p>
+<div class="quote">"Profesor, tutup mata."</div>
+</section>
+
+<section id="penjaga">
+<h2>6. Penjaga</h2>
+<div class="quote">"Penjaga, buka mata."</div>
+<p>Panitia membuat:</p>
+<ul>
+<li>Profesor berdiri.</li>
+<li>Spy berdiri.</li>
+</ul>
+<p>Penjaga melihat kedua pemain tersebut, tetapi tidak mengetahui mana Profesor dan mana Spy.</p>
+<p>Spy dapat memanfaatkan keadaan tersebut dengan berpura-pura menjadi Profesor.</p>
+<div class="quote">"Penjaga, tutup mata."</div>
+</section>
+
+<section id="mayor-detektif">
+<h2>7. Mayor dan Detektif</h2>
+<div class="role-grid">
+<div class="role good">
+<h3>👑 Mayor</h3>
+<p>Mayor mengetahui identitas Detektif.</p>
+</div>
+<div class="role good">
+<h3>🔎 Detektif</h3>
+<p>Detektif mengetahui identitas Mayor.</p>
+</div>
+</div>
+<p>Keduanya tetap tidak mengetahui peran pemain lainnya melalui tahap ini.</p>
+</section>
+
+<section id="jahat">
+<h2>8. Sisi Jahat</h2>
+<div class="quote">"Sisi jahat, buka mata."</div>
+<p>Anggota sisi jahat membuka mata dan dapat mengetahui anggota sisi jahat lainnya:</p>
+<ul>
+<li>Spy</li>
+<li>Blackjack</li>
+<li>Mordred</li>
+<li>3 Penjahat</li>
+</ul>
+<p><strong>Joker tidak ikut membuka mata</strong> karena Joker bukan bagian dari kerja sama sisi jahat.</p>
+<div class="quote">"Sisi jahat, tutup mata."</div>
+<p>Permainan kemudian dimulai.</p>
+</section>
+
+<section id="pangeran">
+<h2>9. Pangeran</h2>
+<p>Pada setiap ronde eksplorasi, <strong>1 pemain dipilih secara acak menjadi Pangeran</strong>.</p>
+<p>Pangeran dapat berasal dari pihak mana pun:</p>
+<ul>
+<li>Baik</li>
+<li>Jahat</li>
+<li>Netral</li>
+</ul>
+<p>Pangeran bertugas menentukan siapa saja yang akan mengikuti eksplorasi dan boleh memilih dirinya sendiri.</p>
+</section>
+
+<section id="tim">
+<h2>10. Pemilihan Tim Eksplorasi</h2>
+<p>Pangeran memilih <strong>6 atau 8 pemain</strong>, sesuai jumlah yang telah ditentukan panitia.</p>
+<p>Setelah tim diumumkan, seluruh pemain melakukan pilihan:</p>
+<div class="side good"><h3>✅ TERIMA</h3><p>Tim disetujui dan eksplorasi dilakukan.</p></div>
+<div class="side evil"><h3>❌ TOLAK</h3><p>Tim ditolak dan eksplorasi tidak dilakukan.</p></div>
+<p>Penolakan memiliki batas <strong>5 kali dalam satu permainan</strong>.</p>
+<p>Jika penolakan kelima sudah terjadi dan tim berikutnya kembali ditolak:</p>
+<p><span class="result evil">🔴 Sisi Jahat Menang.</span></p>
+</section>
+
+<section id="eksplorasi">
+<h2>11. Eksplorasi</h2>
+<p>Jika tim diterima, seluruh anggota tim pergi menuju lokasi tanaman.</p>
+<p>Panitia sebelumnya telah menaruh benda yang menjadi representasi tanaman.</p>
+<div class="quote">🌱 Contoh: Tanaman = Pulpen</div>
+<p>Lokasi benda tersebut sudah diketahui oleh pemain sesuai aturan permainan. Anggota eksplorasi pergi ke lokasi, mengambil benda tersebut, kemudian membawanya kembali ke tempat diskusi.</p>
+</section>
+
+<section id="sabotase">
+<h2>12. Sabotase</h2>
+<p>Pemain yang dapat melakukan sabotase:</p>
+<ul>
+<li>Spy</li>
+<li>Blackjack</li>
+<li>Mordred</li>
+<li>Penjahat</li>
+</ul>
+<p>Mereka menggunakan gestur sabotase rahasia yang telah disepakati sebelum permainan dimulai.</p>
+<p>Setiap pemain jahat hanya dapat melakukan sabotase ketika berada dalam tim eksplorasi.</p>
+<p>Jika jumlah sabotase mencapai batas yang diperlukan:</p>
+<p><span class="result evil">❌ Eksplorasi gagal.</span></p>
+<p>Tanaman tidak berhasil dibawa pulang.</p>
+<p>Jika jumlah sabotase tidak mencapai batas:</p>
+<p><span class="result good">✅ Eksplorasi berhasil.</span></p>
+<p>Tanaman berhasil dibawa pulang.</p>
+</section>
+
+<section id="batas">
+<h2>13. Batas Sabotase</h2>
+<p>Pada awal permainan:</p>
+<div class="quote"><strong>2 sabotase = eksplorasi gagal.</strong></div>
+<p>Jika sebuah eksplorasi gagal, maka batas sabotase eksplorasi berikutnya naik <strong>+1</strong>.</p>
+
+<table>
+<thead><tr><th>Eksplorasi</th><th>Batas</th><th>Hasil</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>2 sabotase</td><td>2 sabotase → ❌ Gagal</td></tr>
+<tr><td>2</td><td>3 sabotase</td><td>3 sabotase → ❌ Gagal</td></tr>
+<tr><td>3</td><td>4 sabotase</td><td>3 sabotase → ✅ Berhasil</td></tr>
+</tbody>
+</table>
+
+<p>Setelah eksplorasi berhasil, batas sabotase berikutnya kembali menjadi <strong>2</strong>.</p>
+<div class="quote"><strong>Pola dasar: 2 → 3 → 4 → 2 → 3 → ...</strong></div>
+</section>
+
+<section id="engineer">
+<h2>14. Engineer dan Sabotase</h2>
+<div class="role good">
+<h3>⚙️ Skill Engineer</h3>
+<p>Jika Engineer berada dalam tim eksplorasi, Engineer dapat mengaktifkan skillnya menggunakan gestur khusus.</p>
+<p>Engineer dapat menggagalkan semua sabotase, <strong>kecuali</strong> sabotase yang dilakukan oleh Mordred dan Blackjack.</p>
+</div>
+
+<table>
+<thead><tr><th>Pelaku Sabotase</th><th>Dapat Digagalkan Engineer?</th></tr></thead>
+<tbody>
+<tr><td>Spy</td><td>✅ Bisa</td></tr>
+<tr><td>Penjahat</td><td>✅ Bisa</td></tr>
+<tr><td>Mordred</td><td>❌ Tidak</td></tr>
+<tr><td>Blackjack</td><td>❌ Tidak</td></tr>
+</tbody>
+</table>
+<p>Engineer memiliki <strong>2 penggunaan skill</strong> dan tidak perlu mengungkapkan identitasnya kepada pemain lain.</p>
+</section>
+
+<section id="komandan">
+<h2>15. Komandan</h2>
+<div class="role good">
+<h3>🧭 Komandan — Sisi Baik</h3>
+<p>Komandan mempunyai <strong>2 penggunaan skill</strong>. Skill hanya aktif ketika Komandan mengikuti eksplorasi.</p>
+<p>Jika Komandan ikut setelah tidak ikut pada eksplorasi sebelumnya:</p>
+<div class="quote">Batas sabotase <strong>+1</strong>.</div>
+<p>Jika Komandan ikut dalam eksplorasi secara berturut-turut:</p>
+<div class="quote">Batas sabotase <strong>−1</strong>.</div>
+</div>
+<p>Contoh:</p>
+<ul>
+<li>Batas normal = 2.</li>
+<li>Komandan tidak ikut Eksplorasi 1, kemudian ikut Eksplorasi 2 → <strong>2 + 1 = 3</strong> sabotase diperlukan.</li>
+<li>Komandan ikut Eksplorasi 2 dan 3 secara berturut-turut → <strong>2 − 1 = 1</strong> sabotase diperlukan.</li>
+</ul>
+<p>Penggunaan skill Komandan tetap terbatas pada <strong>2 kali</strong>.</p>
+</section>
+
+<section id="professor">
+<h2>16. Profesor</h2>
+<div class="role good">
+<h3>👨‍🏫 Skill — Penglihatan</h3>
+<p>Profesor mengetahui 5 pemain sisi jahat pada awal permainan:</p>
+<ul>
+<li>Spy</li>
+<li>Blackjack</li>
+<li>3 Penjahat</li>
+</ul>
+<p>Profesor tidak mengetahui Mordred.</p>
+</div>
+</section>
+
+<section id="mayor">
+<h2>17. Mayor</h2>
+<div class="role good">
+<h3>👑 Skill — Perintah Kerajaan</h3>
+<p>Mayor memiliki <strong>1 penggunaan skill</strong>.</p>
+<p>Saat meeting, Mayor melakukan gestur:</p>
+<div class="quote">Memukul tangan ke lantai.</div>
+<p>Setelah skill aktif, Mayor dapat memilih anggota eksplorasi secara paksa. Pemain lain tidak dapat menolak pemain yang dipilih melalui kemampuan tersebut.</p>
+<p>Mayor mengetahui identitas Detektif sejak awal.</p>
+</div>
+</section>
+
+<section id="detektif">
+<h2>18. Detektif</h2>
+<div class="role good">
+<h3>🔎 Skill — Pengintaian</h3>
+<p>Detektif mempunyai gestur khusus untuk mengaktifkan skill.</p>
+<p>Setelah tim eksplorasi dipilih, Detektif dapat menggunakan skill. Hasilnya diumumkan kepada seluruh pemain.</p>
+<div class="quote">🔎 "Hasil Pengintaian Detektif: 2 Sisi Jahat, 1 Sisi Netral, dan 5 Sisi Baik."</div>
+<p>Jika tim berisi 8 pemain, seluruh jumlah harus berjumlah 8.</p>
+<p>Detektif mengetahui identitas Mayor sejak awal.</p>
+</div>
+</section>
+
+<section id="penjaga-role">
+<h2>19. Penjaga</h2>
+<div class="role good">
+<h3>🛡️ Kemampuan</h3>
+<p>Penjaga hanya memperoleh informasi pada awal permainan.</p>
+<p>Ia melihat <strong>Profesor + Spy</strong> berdiri bersamaan.</p>
+<p>Penjaga tidak mengetahui siapa yang sebenarnya Profesor. Spy dapat berpura-pura menjadi Profesor untuk menyesatkan Penjaga.</p>
+</div>
+</section>
+
+<section id="ksatria">
+<h2>20. Ksatria</h2>
+<div class="role good">
+<h3>⚔️ Skill</h3>
+<p>Tidak memiliki skill khusus.</p>
+<p>Ksatria merupakan anggota pihak baik biasa dan harus menggunakan kemampuan diskusi, pengamatan, serta penalaran untuk membantu menentukan tim eksplorasi yang aman.</p>
+</div>
+</section>
+
+<section id="spy">
+<h2>21. Spy</h2>
+<div class="role evil">
+<h3>🕵️ Kemampuan</h3>
+<p>Spy merupakan bagian dari sisi jahat dan dapat melakukan sabotase.</p>
+<p>Pada awal permainan Spy berdiri bersama Professor ketika Penjaga membuka mata.</p>
+<p>Spy dapat memanfaatkan informasi tersebut untuk berpura-pura menjadi Professor.</p>
+</div>
+</section>
+
+<section id="blackjack">
+<h2>22. Blackjack</h2>
+<div class="role evil">
+<h3>🃏 Sabotase</h3>
+<p>Blackjack dapat melakukan sabotase ketika mengikuti eksplorasi.</p>
+<p>Sabotase Blackjack <strong>tidak dapat digagalkan oleh Engineer</strong>.</p>
+
+<h3>🎯 Tebakan Terakhir</h3>
+<p>Jika pihak baik berhasil mengumpulkan 3 tanaman, permainan belum langsung selesai.</p>
+<p>Blackjack berdiri di tempat diskusi dan mendapatkan <strong>1 kesempatan menebak</strong>.</p>
+<p>Blackjack harus memilih salah satu target:</p>
+<ul>
+<li>Profesor</li>
+<li>Detektif</li>
+</ul>
+<p>Kemudian Blackjack menunjuk satu pemain.</p>
+<p><span class="result evil">Tebakan benar → 🔴 Sisi Jahat Menang.</span></p>
+<p><span class="result good">Tebakan salah → 🟢 Sisi Baik Menang.</span></p>
+</div>
+</section>
+
+<section id="mordred">
+<h2>23. Mordred</h2>
+<div class="role evil">
+<h3>👤 Pemimpin Sisi Jahat</h3>
+<p>Mordred dapat melakukan sabotase.</p>
+<p>Sabotase Mordred <strong>tidak dapat digagalkan oleh Engineer</strong>.</p>
+<p>Selain itu, Profesor tidak dapat melihat Mordred ketika tahap pembukaan.</p>
+<p>Mordred tetap dapat dilihat oleh anggota sisi jahat lainnya.</p>
+</div>
+</section>
+
+<section id="penjahat">
+<h2>24. Penjahat</h2>
+<div class="role evil">
+<h3>😈 Kemampuan</h3>
+<p>Penjahat merupakan anggota sisi jahat biasa.</p>
+<p>Penjahat dapat melakukan sabotase, tetapi tidak mempunyai kemampuan khusus lainnya.</p>
+<p>Penjahat dapat dilihat oleh Profesor pada awal permainan.</p>
+</div>
+</section>
+
+<section id="joker">
+<h2>25. Joker</h2>
+<div class="role neutral">
+<h3>🃏 Joker — Sisi Netral</h3>
+<p>Joker tidak bekerja sama dengan sisi jahat.</p>
+<ul>
+<li>Tidak dapat melakukan sabotase.</li>
+<li>Tidak mengetahui anggota sisi jahat.</li>
+<li>Tidak diketahui oleh anggota sisi jahat.</li>
+</ul>
+<h3>Kondisi Menang</h3>
+<p>Joker harus berhasil mengikuti <strong>3 eksplorasi</strong>.</p>
+<p>Jika Joker telah mengikuti eksplorasi sebanyak 3 kali:</p>
+<p><span class="result neutral">🟡 Joker langsung menang secara individu.</span></p>
+<p>Kemenangan Joker tidak bergantung pada kemenangan pihak baik atau jahat.</p>
+</div>
+</section>
+
+<section id="seeker">
+<h2>26. Spesial Seeker</h2>
+<div class="role neutral">
+<h3>🔍 Spesial Seeker — Sisi Netral</h3>
+<p>Spesial Seeker memiliki tujuan mencari salah satu dari tiga sisi jahat spesial:</p>
+<ul>
+<li>Spy</li>
+<li>Mordred</li>
+<li>Blackjack</li>
+</ul>
+
+<h3>Skill — Pencarian</h3>
+<p>Saat meeting, Spesial Seeker mengangkat tangan. Meeting langsung dihentikan sementara.</p>
+<p>Spesial Seeker berdiri dan dapat dilihat oleh seluruh pemain, kemudian menunjuk <strong>2 pemain</strong>.</p>
+
+<h3>Jika menemukan sisi jahat spesial</h3>
+<p>Jika salah satu dari dua pemain tersebut adalah Spy, Mordred, atau Blackjack:</p>
+<p><span class="result neutral">🟡 Spesial Seeker langsung menang.</span></p>
+
+<h3>Jika menemukan Joker</h3>
+<p>Jika tidak ada sisi jahat spesial tetapi terdapat Joker, Spesial Seeker boleh kembali duduk dan dapat mencoba lagi pada meeting berikutnya.</p>
+
+<h3>Jika gagal total</h3>
+<p>Jika di antara dua pemain tersebut tidak terdapat Spy, Mordred, Blackjack, maupun Joker:</p>
+<p><strong>Spesial Seeker dinonaktifkan secara permanen.</strong></p>
+<ul>
+<li>Tidak dapat menggunakan skill lagi.</li>
+<li>Tidak dapat mengikuti eksplorasi.</li>
+<li>Hanya dapat berbicara dalam meeting.</li>
+</ul>
+</div>
+</section>
+
+<section id="pergantian">
+<h2>27. Pergantian Pangeran</h2>
+<p>Setelah eksplorasi selesai, Pangeran berikutnya dipilih secara acak.</p>
+<p>Pangeran sebelumnya dapat terpilih kembali karena pemilihan dilakukan secara acak.</p>
+<p>Pangeran baru kemudian memilih tim eksplorasi berikutnya.</p>
+</section>
+
+<section id="batas-permainan">
+<h2>28. Batas Permainan</h2>
+<p>Total kesempatan eksplorasi:</p>
+<div class="quote"><strong>5 kali.</strong></div>
+<p>Sisi jahat membutuhkan <strong>3 eksplorasi gagal</strong> untuk memenangkan permainan.</p>
+
+<table>
+<thead><tr><th>Eksplorasi</th><th>Hasil</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>❌ Gagal</td></tr>
+<tr><td>2</td><td>✅ Berhasil</td></tr>
+<tr><td>3</td><td>❌ Gagal</td></tr>
+<tr><td>4</td><td>✅ Berhasil</td></tr>
+<tr><td>5</td><td>❌ Gagal</td></tr>
+</tbody>
+</table>
+
+<p><span class="result evil">🔴 Tiga eksplorasi gagal → Sisi Jahat Menang.</span></p>
+</section>
+
+<section id="baik-menang">
+<h2>29. Kemenangan Sisi Baik</h2>
+<p>Jika sebelum 5 eksplorasi berakhir pihak baik berhasil mengumpulkan:</p>
+<div class="quote">🌱 Tanaman 1 &nbsp; • &nbsp; 🌱 Tanaman 2 &nbsp; • &nbsp; 🌱 Tanaman 3</div>
+<p>maka permainan masuk ke <strong>Tahap Tebakan Blackjack</strong>.</p>
+<p>Blackjack harus menebak <strong>Profesor ATAU Detektif</strong>.</p>
+<p><span class="result evil">Tebakan benar → 🔴 Sisi Jahat Menang.</span></p>
+<p><span class="result good">Tebakan salah → 🟢 Sisi Baik Menang.</span></p>
+</section>
+
+<section id="alur">
+<h2>30. Ringkasan Alur Permainan</h2>
+<div class="flow">
+  <div class="box">👥 20 pemain duduk melingkar</div>
+  <div class="arrow">↓</div>
+  <div class="box">🎴 Pembagian peran</div>
+  <div class="arrow">↓</div>
+  <div class="box">👨‍🏫 Profesor melihat 5 sisi jahat</div>
+  <div class="arrow">↓</div>
+  <div class="box">🛡️ Penjaga melihat Profesor + Spy</div>
+  <div class="arrow">↓</div>
+  <div class="box">👑 Mayor mengetahui Detektif</div>
+  <div class="arrow">↓</div>
+  <div class="box">🔎 Detektif mengetahui Mayor</div>
+  <div class="arrow">↓</div>
+  <div class="box">😈 6 sisi jahat saling mengenal</div>
+  <div class="arrow">↓</div>
+  <div class="box">🎲 Pangeran dipilih secara acak</div>
+  <div class="arrow">↓</div>
+  <div class="box">👥 Pangeran memilih 6/8 anggota eksplorasi</div>
+  <div class="arrow">↓</div>
+  <div class="box">🗳️ Pemain memilih TERIMA / TOLAK</div>
+  <div class="arrow">↓</div>
+  <div class="box">🚶 Tim melakukan eksplorasi</div>
+  <div class="arrow">↓</div>
+  <div class="box">💥 Sabotase dapat dilakukan oleh sisi jahat</div>
+  <div class="arrow">↓</div>
+  <div class="box">⚙️ Engineer dapat menggagalkan sabotase tertentu</div>
+  <div class="arrow">↓</div>
+  <div class="box">🧭 Komandan dapat mengubah batas sabotase</div>
+  <div class="arrow">↓</div>
+  <div class="box">🌱 Tanaman berhasil dibawa / eksplorasi gagal</div>
+  <div class="arrow">↓</div>
+  <div class="box">🎲 Pangeran berikutnya dipilih</div>
+  <div class="arrow">↓</div>
+  <div class="box">🏁 Maksimal 5 eksplorasi</div>
+  <div class="arrow">↓</div>
+  <div class="box">❌ 3 eksplorasi gagal → 🔴 Sisi Jahat Menang</div>
+  <div class="arrow">ATAU</div>
+  <div class="box">🌱 3 tanaman terkumpul → 🃏 Blackjack menebak Profesor/Detektif</div>
+  <div class="arrow">↓</div>
+  <div class="box">🎯 Tebakan benar → 🔴 Jahat Menang | Tebakan salah → 🟢 Baik Menang</div>
+</div>
+</section>
+
+<section id="panitia">
+<h2>⚠️ Catatan Penting untuk Panitia</h2>
+<div class="warning">
+<ol>
+<li>Gestur setiap skill harus dijelaskan sebelum permainan.</li>
+<li>Gestur sabotase harus dijelaskan dan disepakati sebelum permainan.</li>
+<li>Jelaskan berapa kali setiap skill dapat digunakan.</li>
+<li>Jelaskan siapa saja yang boleh melakukan sabotase.</li>
+<li>Tentukan dan umumkan lokasi benda yang menjadi representasi tanaman.</li>
+<li>Tentukan ukuran tim eksplorasi: 6 atau 8 orang.</li>
+<li>Batas awal sabotase adalah 2.</li>
+<li>Jika eksplorasi gagal, batas berikutnya menjadi +1.</li>
+<li>Jika eksplorasi berhasil, batas kembali menjadi 2.</li>
+<li>Penolakan tim maksimal 5 kali.</li>
+<li>Tidak ada sistem kill atau eliminasi.</li>
+<li>Pemain yang dinonaktifkan oleh Spesial Seeker tetap berada dalam permainan, tetapi kehilangan kemampuan eksplorasi dan skill sesuai aturan.</li>
+</ol>
+</div>
+</section>
+
+</main>
+
+<footer>
+  <p class="footer-kelompok">📋 Tugas Kelompok 6 — Aturan & Cara Bermain</p>
+  <p>👑 <strong>Misteri Obat Sang Raja</strong></p>
+  <p>Game fisik deduksi sosial — Untuk game aslinya sebenarnya cuman bisa 10 orang tapi ubah aja jadi 20 biar bisa dibagi jadi 2 kelompok.</p>
+</footer>
+
+</body>
+</html>
