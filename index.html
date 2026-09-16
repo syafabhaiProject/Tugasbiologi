@@ -3,20 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Proposal Penelitian Geografi</title>
+  <title>Proposal Geografi | Persebaran RTH Parung Panjang</title>
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap');
 
     :root {
       --navy: #102a43;
+      --navy-dark: #071b2d;
       --blue: #1d4e89;
-      --light-blue: #eaf3fb;
+      --blue-light: #eaf3fb;
       --gold: #d9a441;
+      --gold-light: #f5e4b7;
       --white: #ffffff;
       --text: #263238;
       --muted: #667085;
-      --shadow: 0 20px 50px rgba(16, 42, 67, 0.18);
+      --page-width: 100%;
+      --page-height: 720px;
     }
 
     * {
@@ -25,66 +28,56 @@
       padding: 0;
     }
 
-    html,
     body {
-      width: 100%;
-      min-height: 100%;
+      min-height: 100vh;
+      padding: 25px 15px;
       font-family: "Inter", sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at top left, #dceeff 0%, transparent 35%),
-        linear-gradient(135deg, #f1f6fa, #dce7f0);
+        radial-gradient(circle at 10% 10%, #d9ecfb, transparent 32%),
+        radial-gradient(circle at 90% 90%, #e8def6, transparent 32%),
+        linear-gradient(135deg, #eef4f8, #dce7f0);
       overflow-x: hidden;
     }
 
-    body {
-      padding: 30px 15px;
-    }
-
-    /* Latar dekorasi */
-    body::before,
-    body::after {
+    body::before {
       content: "";
       position: fixed;
-      width: 260px;
-      height: 260px;
-      border-radius: 50%;
-      filter: blur(10px);
-      opacity: 0.35;
-      z-index: -1;
+      inset: 0;
       pointer-events: none;
+      opacity: 0.25;
+      background-image:
+        linear-gradient(rgba(16, 42, 67, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16, 42, 67, 0.025) 1px, transparent 1px);
+      background-size: 35px 35px;
+      z-index: -1;
     }
 
-    body::before {
-      top: -100px;
-      right: -80px;
-      background: #b9dcf7;
-    }
-
-    body::after {
-      bottom: -120px;
-      left: -100px;
-      background: #d9c5ef;
+    button {
+      font-family: inherit;
     }
 
     .app {
-      width: min(1100px, 100%);
+      width: min(1120px, 100%);
       margin: auto;
     }
 
-    /* Header */
+    /* =========================
+       TOPBAR
+    ========================= */
+
     .topbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 15px;
-      margin-bottom: 20px;
-      padding: 15px 20px;
-      background: rgba(255, 255, 255, 0.75);
+      padding: 14px 18px;
+      margin-bottom: 22px;
       border: 1px solid rgba(255, 255, 255, 0.8);
       border-radius: 18px;
-      backdrop-filter: blur(15px);
-      box-shadow: 0 8px 25px rgba(16, 42, 67, 0.08);
+      background: rgba(255, 255, 255, 0.76);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 30px rgba(16, 42, 67, 0.08);
     }
 
     .brand {
@@ -94,23 +87,23 @@
     }
 
     .brand img {
-      width: 48px;
-      height: 48px;
+      width: 50px;
+      height: 50px;
       object-fit: contain;
       border-radius: 10px;
     }
 
-    .brand-text h1 {
-      font-size: 15px;
+    .brand h1 {
       color: var(--navy);
+      font-size: 15px;
       font-weight: 800;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.4px;
     }
 
-    .brand-text p {
-      font-size: 11px;
+    .brand p {
+      margin-top: 4px;
       color: var(--muted);
-      margin-top: 3px;
+      font-size: 11px;
     }
 
     .top-actions {
@@ -118,135 +111,239 @@
       gap: 8px;
     }
 
-    .icon-btn {
+    .icon-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
       border: none;
-      background: var(--light-blue);
-      color: var(--navy);
-      width: 38px;
-      height: 38px;
       border-radius: 12px;
-      cursor: pointer;
+      background: var(--blue-light);
+      color: var(--navy);
       font-size: 17px;
+      cursor: pointer;
       transition: 0.25s ease;
     }
 
-    .icon-btn:hover {
-      background: var(--blue);
+    .icon-button:hover {
       color: white;
+      background: var(--blue);
       transform: translateY(-3px);
+      box-shadow: 0 8px 18px rgba(29, 78, 137, 0.2);
     }
 
-    /* Area buku */
-    .book-wrapper {
-      position: relative;
-      perspective: 1800px;
+    /* =========================
+       BOOK AREA
+    ========================= */
+
+    .book-scene {
+      width: 100%;
+      height: var(--page-height);
+      perspective: 2200px;
+      perspective-origin: center center;
     }
 
     .book {
       position: relative;
       width: 100%;
-      min-height: 680px;
-      overflow: hidden;
-      border-radius: 20px;
-      background: #fff;
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(16, 42, 67, 0.08);
+      height: 100%;
+      transform-style: preserve-3d;
+      border-radius: 12px 20px 20px 12px;
+      box-shadow:
+        0 30px 65px rgba(16, 42, 67, 0.22),
+        0 8px 15px rgba(16, 42, 67, 0.08);
     }
 
-    .page {
-      display: none;
-      min-height: 680px;
-      padding: 55px 65px;
+    /* Bagian punggung buku */
+    .book::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: -12px;
+      width: 20px;
+      z-index: -1;
+      border-radius: 10px 0 0 10px;
       background:
         linear-gradient(
           90deg,
-          rgba(16, 42, 67, 0.025),
-          transparent 5%,
-          transparent 95%,
-          rgba(16, 42, 67, 0.025)
+          #071b2d,
+          #183c5b 45%,
+          #071b2d
+        );
+      box-shadow: inset -4px 0 5px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Bayangan di bawah buku */
+    .book::after {
+      content: "";
+      position: absolute;
+      z-index: -2;
+      left: 4%;
+      right: 2%;
+      bottom: -25px;
+      height: 35px;
+      border-radius: 50%;
+      background: rgba(16, 42, 67, 0.25);
+      filter: blur(15px);
+      transform: translateZ(-100px);
+    }
+
+    .page {
+      position: absolute;
+      inset: 0;
+      display: none;
+      overflow-y: auto;
+      padding: 55px 70px 65px;
+      border-radius: 12px 20px 20px 12px;
+      background:
+        linear-gradient(
+          90deg,
+          rgba(16, 42, 67, 0.055),
+          transparent 7%,
+          transparent 94%,
+          rgba(16, 42, 67, 0.035)
         ),
         #ffffff;
-      position: relative;
-      overflow-y: auto;
+      transform-origin: left center;
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+      scrollbar-width: thin;
+      scrollbar-color: var(--blue) #edf2f7;
+    }
+
+    .page::-webkit-scrollbar {
+      width: 7px;
+    }
+
+    .page::-webkit-scrollbar-thumb {
+      background: var(--blue);
+      border-radius: 20px;
     }
 
     .page.active {
       display: block;
-      animation-duration: 0.55s;
-      animation-fill-mode: both;
+      z-index: 2;
     }
 
-    .page.slide-next {
-      animation-name: slideFromRight;
+    /*
+      Animasi halaman berputar seperti buku.
+      Halaman baru muncul dari sisi kanan.
+    */
+    .page.flip-next {
+      display: block;
+      z-index: 5;
+      animation: flipNext 0.85s cubic-bezier(0.22, 0.61, 0.36, 1);
     }
 
-    .page.slide-prev {
-      animation-name: slideFromLeft;
+    .page.flip-prev {
+      display: block;
+      z-index: 5;
+      animation: flipPrev 0.85s cubic-bezier(0.22, 0.61, 0.36, 1);
     }
 
-    @keyframes slideFromRight {
+    @keyframes flipNext {
       0% {
         opacity: 0;
-        transform: translateX(80px) rotateY(-8deg);
+        transform: rotateY(-90deg) translateX(30px);
+        transform-origin: left center;
+      }
+
+      45% {
+        opacity: 1;
       }
 
       100% {
         opacity: 1;
-        transform: translateX(0) rotateY(0);
+        transform: rotateY(0deg) translateX(0);
+        transform-origin: left center;
       }
     }
 
-    @keyframes slideFromLeft {
+    @keyframes flipPrev {
       0% {
         opacity: 0;
-        transform: translateX(-80px) rotateY(8deg);
+        transform: rotateY(90deg) translateX(-30px);
+        transform-origin: right center;
+      }
+
+      45% {
+        opacity: 1;
       }
 
       100% {
         opacity: 1;
-        transform: translateX(0) rotateY(0);
+        transform: rotateY(0deg) translateX(0);
+        transform-origin: right center;
       }
     }
 
-    /* Efek halaman */
-    .page::after {
+    /* Garis tepi halaman */
+    .page::before {
       content: "";
       position: absolute;
       top: 0;
       right: 0;
-      width: 8px;
+      width: 10px;
       height: 100%;
+      pointer-events: none;
       background: linear-gradient(
         to left,
-        rgba(16, 42, 67, 0.06),
+        rgba(16, 42, 67, 0.07),
         transparent
       );
+    }
+
+    /* =========================
+       COVER
+    ========================= */
+
+    .cover {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 45px 30px;
+      background:
+        linear-gradient(
+          rgba(255, 255, 255, 0.91),
+          rgba(235, 246, 253, 0.97)
+        ),
+        radial-gradient(circle at center, #cbe6fa, transparent 65%);
+    }
+
+    .cover.active {
+      display: flex;
+    }
+
+    .cover.flip-next,
+    .cover.flip-prev {
+      display: flex;
+    }
+
+    .cover::after {
+      content: "";
+      position: absolute;
+      inset: 25px;
+      border: 2px solid rgba(29, 78, 137, 0.18);
+      border-radius: 14px;
       pointer-events: none;
     }
 
-    /* Sampul */
-    .cover {
-      min-height: 680px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      background:
-        linear-gradient(rgba(255, 255, 255, 0.93), rgba(237, 246, 253, 0.97)),
-        radial-gradient(circle at center, #d8ebfb, transparent 65%);
-    }
-
-    .cover .school-logo {
-      width: 135px;
-      height: 135px;
+    .cover-logo {
+      position: relative;
+      z-index: 1;
+      width: 145px;
+      height: 145px;
       object-fit: contain;
       margin-bottom: 25px;
-      filter: drop-shadow(0 10px 12px rgba(16, 42, 67, 0.15));
-      animation: floatLogo 4s ease-in-out infinite;
+      filter: drop-shadow(0 12px 12px rgba(16, 42, 67, 0.15));
+      animation: floating 4s ease-in-out infinite;
     }
 
-    @keyframes floatLogo {
+    @keyframes floating {
       0%,
       100% {
         transform: translateY(0);
@@ -257,129 +354,157 @@
       }
     }
 
-    .cover .line {
-      width: 90px;
+    .cover-label {
+      position: relative;
+      z-index: 1;
+      color: var(--blue);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    .gold-line {
+      position: relative;
+      z-index: 1;
+      width: 100px;
       height: 5px;
-      background: var(--gold);
-      border-radius: 50px;
       margin: 20px auto;
+      border-radius: 50px;
+      background: var(--gold);
     }
 
     .cover h2 {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
       color: var(--navy);
-      font-size: clamp(23px, 4vw, 39px);
-      line-height: 1.25;
-      max-width: 780px;
       font-family: "Playfair Display", serif;
+      font-size: clamp(24px, 4vw, 42px);
+      line-height: 1.25;
       text-transform: uppercase;
     }
 
-    .cover .subtitle {
-      margin-top: 15px;
-      color: var(--blue);
-      font-weight: 700;
-      font-size: 14px;
-      letter-spacing: 1px;
-    }
-
-    .cover .identity {
-      margin-top: 55px;
+    .cover-info {
+      position: relative;
+      z-index: 1;
+      margin-top: 45px;
       color: var(--muted);
       font-size: 13px;
-      line-height: 1.8;
+      line-height: 1.9;
     }
 
-    .cover .identity strong {
+    .cover-info strong {
       color: var(--navy);
     }
 
-    /* Heading BAB */
+    /* =========================
+       TYPOGRAPHY
+    ========================= */
+
+    .page-tag {
+      position: absolute;
+      top: 25px;
+      right: 40px;
+      color: #98a2b3;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
     .chapter-label {
       display: inline-block;
+      margin-bottom: 15px;
       padding: 8px 15px;
+      border-radius: 30px;
       color: white;
       background: var(--blue);
-      border-radius: 30px;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 800;
       letter-spacing: 1px;
-      margin-bottom: 15px;
     }
 
     .page h2 {
+      margin-bottom: 25px;
       color: var(--navy);
       font-family: "Playfair Display", serif;
-      font-size: clamp(25px, 4vw, 36px);
-      margin-bottom: 25px;
+      font-size: clamp(27px, 4vw, 38px);
       line-height: 1.2;
     }
 
     .page h3 {
+      margin-top: 27px;
+      margin-bottom: 12px;
+      padding-left: 12px;
+      border-left: 4px solid var(--gold);
       color: var(--blue);
       font-size: 18px;
-      margin-top: 25px;
-      margin-bottom: 10px;
-      border-left: 4px solid var(--gold);
-      padding-left: 12px;
+      line-height: 1.4;
     }
 
     .page h4 {
-      color: var(--navy);
-      margin-top: 18px;
+      margin-top: 20px;
       margin-bottom: 8px;
+      color: var(--navy);
+      font-size: 15px;
     }
 
     .page p {
+      margin-bottom: 13px;
       font-size: 14px;
       line-height: 1.85;
       text-align: justify;
-      margin-bottom: 12px;
     }
 
     .page ul,
     .page ol {
+      margin: 10px 0 18px;
       padding-left: 25px;
-      margin: 10px 0 16px;
     }
 
     .page li {
+      margin-bottom: 8px;
       font-size: 14px;
-      line-height: 1.8;
-      margin-bottom: 7px;
+      line-height: 1.75;
     }
 
     .highlight {
-      background: var(--light-blue);
-      border-left: 5px solid var(--blue);
-      padding: 16px 18px;
-      border-radius: 0 12px 12px 0;
       margin: 20px 0;
+      padding: 16px 18px;
+      border-left: 5px solid var(--blue);
+      border-radius: 0 12px 12px 0;
+      background: var(--blue-light);
     }
 
     .highlight p {
       margin-bottom: 0;
     }
 
-    /* Tabel */
+    /* =========================
+       TABLE
+    ========================= */
+
     .table-container {
-      overflow-x: auto;
+      width: 100%;
       margin: 18px 0;
-      border-radius: 12px;
+      overflow-x: auto;
       border: 1px solid #dce5ed;
+      border-radius: 12px;
     }
 
     table {
       width: 100%;
+      min-width: 620px;
       border-collapse: collapse;
-      min-width: 600px;
       font-size: 13px;
     }
 
     th {
-      background: var(--navy);
-      color: white;
-      text-align: left;
       padding: 13px;
+      color: white;
+      background: var(--navy);
+      text-align: left;
+      line-height: 1.5;
     }
 
     td {
@@ -393,7 +518,14 @@
       background: #f7fafc;
     }
 
-    /* Alur penelitian */
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* =========================
+       FLOW DIAGRAM
+    ========================= */
+
     .flow {
       display: flex;
       flex-wrap: wrap;
@@ -404,21 +536,21 @@
     }
 
     .flow-item {
-      background: var(--light-blue);
+      min-width: 135px;
+      padding: 13px 15px;
       border: 1px solid #c7dff2;
-      color: var(--navy);
-      padding: 13px 17px;
       border-radius: 12px;
+      background: var(--blue-light);
+      color: var(--navy);
       font-size: 12px;
       font-weight: 700;
       text-align: center;
-      min-width: 140px;
       transition: 0.25s ease;
     }
 
     .flow-item:hover {
       transform: translateY(-5px);
-      box-shadow: 0 8px 18px rgba(29, 78, 137, 0.12);
+      box-shadow: 0 8px 18px rgba(29, 78, 137, 0.13);
     }
 
     .flow-arrow {
@@ -427,68 +559,120 @@
       font-weight: 800;
     }
 
-    /* Daftar pustaka */
+    /* =========================
+       5W + 1H CARD
+    ========================= */
+
+    .fivew-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 13px;
+      margin-top: 18px;
+    }
+
+    .fivew-card {
+      padding: 16px;
+      border: 1px solid #d8e5ef;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #ffffff, #f4f9fd);
+      box-shadow: 0 5px 14px rgba(16, 42, 67, 0.045);
+      transition: 0.25s ease;
+    }
+
+    .fivew-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--blue);
+      box-shadow: 0 10px 20px rgba(29, 78, 137, 0.1);
+    }
+
+    .fivew-card .letter {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 9px;
+      border-radius: 10px;
+      background: var(--navy);
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .fivew-card h4 {
+      margin: 0 0 7px;
+      color: var(--blue);
+      font-size: 14px;
+    }
+
+    .fivew-card p {
+      margin: 0;
+      font-size: 12px;
+      line-height: 1.65;
+      text-align: left;
+    }
+
+    /* =========================
+       REFERENCES
+    ========================= */
+
     .reference {
       padding-left: 25px;
       text-indent: -25px;
-      margin-bottom: 12px;
-      line-height: 1.7;
+      margin-bottom: 14px;
       font-size: 13px;
+      line-height: 1.75;
+      text-align: left !important;
     }
 
-    /* Nomor halaman */
+    /* =========================
+       PAGE NUMBER
+    ========================= */
+
     .page-number {
       position: absolute;
-      bottom: 22px;
-      right: 35px;
+      right: 40px;
+      bottom: 25px;
+      color: #98a2b3;
       font-size: 11px;
-      color: #98a2b3;
     }
 
-    .page-tag {
-      position: absolute;
-      top: 22px;
-      right: 35px;
-      font-size: 10px;
-      color: #98a2b3;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
+    /* =========================
+       NAVIGATION
+    ========================= */
 
-    /* Navigasi */
     .navigation {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 15px;
-      margin-top: 20px;
+      margin-top: 24px;
     }
 
-    .nav-btn {
+    .nav-button {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
+      min-width: 155px;
+      padding: 14px 20px;
       border: none;
-      cursor: pointer;
-      padding: 13px 20px;
-      border-radius: 12px;
-      color: white;
+      border-radius: 13px;
       background: var(--navy);
-      font-family: inherit;
-      font-weight: 700;
+      color: white;
       font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
       transition: 0.25s ease;
-      min-width: 145px;
     }
 
-    .nav-btn:hover:not(:disabled) {
+    .nav-button:hover:not(:disabled) {
       background: var(--blue);
       transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(16, 42, 67, 0.18);
+      box-shadow: 0 9px 20px rgba(16, 42, 67, 0.18);
     }
 
-    .nav-btn:disabled {
+    .nav-button:disabled {
       cursor: not-allowed;
       opacity: 0.35;
     }
@@ -497,93 +681,131 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 7px;
+      gap: 8px;
       color: var(--muted);
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .progress {
-      width: 150px;
-      height: 5px;
-      background: #dbe5ed;
-      border-radius: 20px;
+      width: 180px;
+      height: 6px;
       overflow: hidden;
+      border-radius: 50px;
+      background: #dbe5ed;
     }
 
     .progress-bar {
       width: 0%;
       height: 100%;
+      border-radius: 50px;
       background: linear-gradient(90deg, var(--blue), var(--gold));
-      border-radius: 20px;
-      transition: width 0.4s ease;
+      transition: width 0.45s ease;
     }
 
-    /* Daftar isi mini */
+    /* =========================
+       MINI TABLE OF CONTENTS
+    ========================= */
+
+    .toc-wrapper {
+      margin-top: 22px;
+    }
+
+    .toc-title {
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
     .toc {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 15px;
+      justify-content: center;
+      gap: 7px;
     }
 
     .toc button {
+      padding: 8px 11px;
       border: 1px solid #cbdbea;
-      background: white;
-      color: var(--navy);
-      padding: 9px 12px;
       border-radius: 9px;
-      font-family: inherit;
+      background: rgba(255, 255, 255, 0.8);
+      color: var(--navy);
       font-size: 11px;
       cursor: pointer;
-      transition: 0.2s;
+      transition: 0.2s ease;
     }
 
     .toc button:hover,
     .toc button.active {
-      background: var(--blue);
       border-color: var(--blue);
+      background: var(--blue);
       color: white;
+      transform: translateY(-2px);
     }
 
-    /* Responsif */
-    @media (max-width: 700px) {
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 800px) {
+      :root {
+        --page-height: 700px;
+      }
+
       body {
         padding: 12px 8px;
       }
 
       .topbar {
         padding: 12px;
-      }
-
-      .brand-text h1 {
-        font-size: 12px;
-      }
-
-      .brand-text p {
-        font-size: 9px;
+        margin-bottom: 15px;
       }
 
       .brand img {
-        width: 40px;
-        height: 40px;
+        width: 42px;
+        height: 42px;
+      }
+
+      .brand h1 {
+        font-size: 11px;
+      }
+
+      .brand p {
+        font-size: 9px;
+      }
+
+      .icon-button {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
       }
 
       .page {
-        padding: 42px 25px 55px;
-        min-height: 650px;
+        padding: 45px 27px 60px;
       }
 
-      .book {
-        min-height: 650px;
+      .page-tag {
+        top: 20px;
+        right: 25px;
+      }
+
+      .page-number {
+        right: 25px;
+        bottom: 22px;
       }
 
       .cover {
-        min-height: 650px;
-        padding: 35px 20px;
+        padding: 30px 22px;
       }
 
-      .cover .school-logo {
+      .cover::after {
+        inset: 15px;
+      }
+
+      .cover-logo {
         width: 105px;
         height: 105px;
       }
@@ -592,8 +814,14 @@
         font-size: 25px;
       }
 
-      .cover .identity {
-        margin-top: 35px;
+      .cover-label {
+        font-size: 11px;
+        letter-spacing: 1.3px;
+      }
+
+      .cover-info {
+        margin-top: 30px;
+        font-size: 11px;
       }
 
       .page h2 {
@@ -605,11 +833,15 @@
         font-size: 13px;
       }
 
+      .fivew-grid {
+        grid-template-columns: 1fr;
+      }
+
       .navigation {
         gap: 8px;
       }
 
-      .nav-btn {
+      .nav-button {
         min-width: 0;
         flex: 1;
         padding: 12px 8px;
@@ -617,44 +849,89 @@
       }
 
       .progress {
-        width: 90px;
+        width: 100px;
       }
 
-      .page-number {
-        right: 20px;
-      }
-
-      .page-tag {
-        right: 20px;
+      .toc button {
+        font-size: 10px;
+        padding: 7px 9px;
       }
     }
 
-    /* Saat dicetak */
+    @media (max-width: 450px) {
+      :root {
+        --page-height: 680px;
+      }
+
+      .page {
+        padding-left: 21px;
+        padding-right: 21px;
+      }
+
+      .page h2 {
+        font-size: 25px;
+      }
+
+      .chapter-label {
+        font-size: 10px;
+      }
+
+      .flow-item {
+        min-width: 115px;
+        font-size: 11px;
+      }
+
+      .flow-arrow {
+        font-size: 18px;
+      }
+    }
+
+    /* =========================
+       PRINT MODE
+    ========================= */
+
     @media print {
       body {
-        background: white;
         padding: 0;
+        background: white;
       }
 
       .topbar,
       .navigation,
-      .toc {
+      .toc-wrapper {
         display: none !important;
       }
 
+      .book-scene {
+        height: auto;
+        perspective: none;
+      }
+
       .book {
+        height: auto;
         box-shadow: none;
-        border: none;
-        overflow: visible;
+        transform: none;
+      }
+
+      .book::before,
+      .book::after {
+        display: none;
       }
 
       .page,
-      .page.active {
+      .page.active,
+      .cover,
+      .cover.active {
+        position: relative;
+        inset: auto;
         display: block !important;
         min-height: auto;
+        height: auto;
+        overflow: visible;
         page-break-after: always;
-        padding: 25px;
+        padding: 35px;
         animation: none !important;
+        transform: none !important;
       }
 
       .cover {
@@ -672,52 +949,74 @@
 <body>
   <main class="app">
 
-    <!-- HEADER -->
+    <!-- =========================
+         HEADER
+    ========================= -->
+
     <header class="topbar">
       <div class="brand">
-        <img src="logoSMAN5.png" alt="Logo SMAN 5 Bogor" />
+        <img
+          src="logoSMAN5.png"
+          alt="Logo SMAN 5 Bogor"
+        />
 
-        <div class="brand-text">
+        <div>
           <h1>PROPOSAL PENELITIAN GEOGRAFI</h1>
           <p>SMAN 5 Bogor • Kelas X</p>
         </div>
       </div>
 
       <div class="top-actions">
-        <button class="icon-btn" onclick="goToPage(0)" title="Kembali ke sampul">
+        <button
+          class="icon-button"
+          onclick="goToPage(0)"
+          title="Kembali ke sampul"
+        >
           ⌂
         </button>
 
-        <button class="icon-btn" onclick="window.print()" title="Cetak proposal">
+        <button
+          class="icon-button"
+          onclick="window.print()"
+          title="Cetak proposal"
+        >
           🖨
         </button>
       </div>
     </header>
 
-    <!-- BUKU -->
-    <section class="book-wrapper">
+    <!-- =========================
+         BUKU DIGITAL
+    ========================= -->
+
+    <section class="book-scene">
       <div class="book">
 
-        <!-- HALAMAN 1: SAMPUL -->
+        <!-- =========================
+             HALAMAN 1: COVER
+        ========================= -->
+
         <article class="page cover active">
           <img
-            class="school-logo"
+            class="cover-logo"
             src="logoSMAN5.png"
             alt="Logo SMAN 5 Bogor"
           />
 
-          <div class="line"></div>
+          <div class="cover-label">
+            PROPOSAL PENELITIAN GEOGRAFI
+          </div>
 
-          <p class="subtitle">PROPOSAL PENELITIAN GEOGRAFI</p>
+          <div class="gold-line"></div>
 
           <h2>
             Identifikasi Persebaran Ruang Terbuka Hijau
             di Kawasan Perkotaan Parung Panjang
           </h2>
 
-          <div class="line"></div>
+          <div class="gold-line"></div>
 
-          <div class="identity">
+          <div class="cover-info">
             <strong>Disusun untuk memenuhi tugas mata pelajaran Geografi</strong>
             <br />
             SMAN 5 Bogor
@@ -725,10 +1024,13 @@
             Tahun Pelajaran 2026/2027
           </div>
 
-          <div class="page-number">1</div>
+          <span class="page-number">1</span>
         </article>
 
-        <!-- HALAMAN 2: DAFTAR ISI -->
+        <!-- =========================
+             HALAMAN 2: DAFTAR ISI
+        ========================= -->
+
         <article class="page">
           <span class="page-tag">Pendahuluan</span>
           <span class="chapter-label">DAFTAR ISI</span>
@@ -737,19 +1039,10 @@
 
           <div class="highlight">
             <p>
-              Gunakan tombol navigasi di bawah untuk membaca proposal
-              seperti membuka halaman buku.
+              Proposal ini disajikan dalam bentuk buku digital.
+              Gunakan tombol navigasi, tombol panah pada keyboard,
+              atau geser layar pada perangkat seluler untuk berpindah halaman.
             </p>
-          </div>
-
-          <div class="toc">
-            <button onclick="goToPage(0)">Sampul</button>
-            <button onclick="goToPage(2)">BAB I</button>
-            <button onclick="goToPage(3)">BAB II</button>
-            <button onclick="goToPage(4)">BAB III</button>
-            <button onclick="goToPage(5)">BAB IV</button>
-            <button onclick="goToPage(6)">BAB V</button>
-            <button onclick="goToPage(7)">Daftar Pustaka</button>
           </div>
 
           <h3>Susunan Proposal</h3>
@@ -763,10 +1056,25 @@
             <li>Daftar Pustaka</li>
           </ol>
 
-          <div class="page-number">2</div>
+          <h3>Navigasi Cepat</h3>
+
+          <div class="toc">
+            <button onclick="goToPage(0)">Sampul</button>
+            <button onclick="goToPage(2)">BAB I</button>
+            <button onclick="goToPage(3)">BAB II</button>
+            <button onclick="goToPage(4)">BAB III</button>
+            <button onclick="goToPage(5)">BAB IV</button>
+            <button onclick="goToPage(6)">BAB V</button>
+            <button onclick="goToPage(7)">Daftar Pustaka</button>
+          </div>
+
+          <span class="page-number">2</span>
         </article>
 
-        <!-- HALAMAN 3: BAB I -->
+        <!-- =========================
+             HALAMAN 3: BAB I
+        ========================= -->
+
         <article class="page">
           <span class="page-tag">Bab I</span>
           <span class="chapter-label">BAB I</span>
@@ -804,7 +1112,70 @@
             Parung Panjang melalui pemetaan dan observasi sederhana.
           </p>
 
-          <h3>1.2 Rumusan Masalah</h3>
+          <h3>1.2 Identifikasi Penelitian Berdasarkan 5W+1H</h3>
+
+          <p>
+            Pendekatan 5W+1H digunakan untuk memperjelas objek, pihak
+            yang berkaitan, lokasi, waktu, alasan, dan metode penelitian.
+          </p>
+
+          <div class="fivew-grid">
+            <div class="fivew-card">
+              <div class="letter">W</div>
+              <h4>What — Apa?</h4>
+              <p>
+                Penelitian ini mengidentifikasi persebaran Ruang Terbuka
+                Hijau (RTH) di kawasan perkotaan.
+              </p>
+            </div>
+
+            <div class="fivew-card">
+              <div class="letter">W</div>
+              <h4>Who — Siapa?</h4>
+              <p>
+                Pihak yang berkaitan adalah masyarakat dan pengelola
+                ruang terbuka hijau di kawasan penelitian.
+              </p>
+            </div>
+
+            <div class="fivew-card">
+              <div class="letter">W</div>
+              <h4>Where — Di mana?</h4>
+              <p>
+                Penelitian dilakukan di Kawasan Perkotaan Parung Panjang,
+                Kabupaten Bogor.
+              </p>
+            </div>
+
+            <div class="fivew-card">
+              <div class="letter">W</div>
+              <h4>When — Kapan?</h4>
+              <p>
+                Penelitian direncanakan dilaksanakan pada September hingga
+                Oktober 2026, atau sesuai jadwal penelitian.
+              </p>
+            </div>
+
+            <div class="fivew-card">
+              <div class="letter">W</div>
+              <h4>Why — Mengapa?</h4>
+              <p>
+                Untuk mengetahui lokasi, jenis, dan pola persebaran RTH
+                di tengah perkembangan kawasan perkotaan.
+              </p>
+            </div>
+
+            <div class="fivew-card">
+              <div class="letter">H</div>
+              <h4>How — Bagaimana?</h4>
+              <p>
+                Penelitian dilakukan melalui studi pustaka, observasi,
+                dokumentasi, pemetaan, dan analisis deskriptif keruangan.
+              </p>
+            </div>
+          </div>
+
+          <h3>1.3 Rumusan Masalah</h3>
 
           <ol>
             <li>
@@ -819,7 +1190,7 @@
             </li>
           </ol>
 
-          <h3>1.3 Tujuan Penelitian</h3>
+          <h3>1.4 Tujuan Penelitian</h3>
 
           <ol>
             <li>Mengidentifikasi lokasi ruang terbuka hijau.</li>
@@ -831,7 +1202,7 @@
             </li>
           </ol>
 
-          <h3>1.4 Manfaat Penelitian</h3>
+          <h3>1.5 Manfaat Penelitian</h3>
 
           <ul>
             <li>
@@ -846,10 +1217,13 @@
             </li>
           </ul>
 
-          <div class="page-number">3</div>
+          <span class="page-number">3</span>
         </article>
 
-        <!-- HALAMAN 4: BAB II -->
+        <!-- =========================
+             HALAMAN 4: BAB II
+        ========================= -->
+
         <article class="page">
           <span class="page-tag">Bab II</span>
           <span class="chapter-label">BAB II</span>
@@ -921,10 +1295,13 @@
             </p>
           </div>
 
-          <div class="page-number">4</div>
+          <span class="page-number">4</span>
         </article>
 
-        <!-- HALAMAN 5: BAB III -->
+        <!-- =========================
+             HALAMAN 5: BAB III
+        ========================= -->
+
         <article class="page">
           <span class="page-tag">Bab III</span>
           <span class="chapter-label">BAB III</span>
@@ -943,9 +1320,9 @@
 
           <p>
             Penelitian dilaksanakan di Kawasan Perkotaan Parung Panjang,
-            Kabupaten Bogor. Waktu penelitian dilaksanakan pada bulan
-            yang telah ditentukan oleh peneliti sesuai kebutuhan
-            pengumpulan data.
+            Kabupaten Bogor. Waktu penelitian direncanakan pada September
+            hingga Oktober 2026, atau disesuaikan dengan jadwal kegiatan
+            penelitian.
           </p>
 
           <h3>3.3 Objek Penelitian</h3>
@@ -973,13 +1350,20 @@
                 <tr>
                   <td>Data primer</td>
                   <td>Observasi lapangan dan dokumentasi</td>
-                  <td>Mengidentifikasi lokasi dan kondisi RTH</td>
+                  <td>
+                    Mengidentifikasi lokasi, jenis, dan kondisi RTH.
+                  </td>
                 </tr>
 
                 <tr>
                   <td>Data sekunder</td>
-                  <td>Peta dasar, citra satelit, dokumen tata ruang</td>
-                  <td>Menentukan batas wilayah dan membantu pemetaan</td>
+                  <td>
+                    Peta dasar, citra satelit, dokumen tata ruang,
+                    dan penelitian terdahulu.
+                  </td>
+                  <td>
+                    Menentukan batas wilayah dan membantu proses pemetaan.
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -1015,10 +1399,13 @@
             deskripsi, foto, dan peta persebaran.
           </p>
 
-          <div class="page-number">5</div>
+          <span class="page-number">5</span>
         </article>
 
-        <!-- HALAMAN 6: BAB IV -->
+        <!-- =========================
+             HALAMAN 6: BAB IV
+        ========================= -->
+
         <article class="page">
           <span class="page-tag">Bab IV</span>
           <span class="chapter-label">BAB IV</span>
@@ -1101,10 +1488,13 @@
             </p>
           </div>
 
-          <div class="page-number">6</div>
+          <span class="page-number">6</span>
         </article>
 
-        <!-- HALAMAN 7: BAB V -->
+        <!-- =========================
+             HALAMAN 7: BAB V
+        ========================= -->
+
         <article class="page">
           <span class="page-tag">Bab V</span>
           <span class="chapter-label">BAB V</span>
@@ -1153,10 +1543,13 @@
             </p>
           </div>
 
-          <div class="page-number">7</div>
+          <span class="page-number">7</span>
         </article>
 
-        <!-- HALAMAN 8: DAFTAR PUSTAKA -->
+        <!-- =========================
+             HALAMAN 8: DAFTAR PUSTAKA
+        ========================= -->
+
         <article class="page">
           <span class="page-tag">Referensi</span>
           <span class="chapter-label">DAFTAR PUSTAKA</span>
@@ -1200,16 +1593,25 @@
             penelitian.
           </p>
 
-          <div class="page-number">8</div>
+          <div class="highlight">
+            <p>
+              Terima kasih telah membaca proposal penelitian ini.
+            </p>
+          </div>
+
+          <span class="page-number">8</span>
         </article>
 
       </div>
     </section>
 
-    <!-- NAVIGASI -->
+    <!-- =========================
+         NAVIGASI BUKU
+    ========================= -->
+
     <nav class="navigation">
       <button
-        class="nav-btn"
+        class="nav-button"
         id="prevBtn"
         onclick="previousPage()"
       >
@@ -1220,18 +1622,39 @@
         <span id="pageText">Halaman 1 dari 8</span>
 
         <div class="progress">
-          <div class="progress-bar" id="progressBar"></div>
+          <div
+            class="progress-bar"
+            id="progressBar"
+          ></div>
         </div>
       </div>
 
       <button
-        class="nav-btn"
+        class="nav-button"
         id="nextBtn"
         onclick="nextPage()"
       >
         Berikutnya →
       </button>
     </nav>
+
+    <!-- DAFTAR ISI MINI -->
+    <div class="toc-wrapper">
+      <div class="toc-title">
+        Navigasi Halaman
+      </div>
+
+      <div class="toc" id="bottomToc">
+        <button onclick="goToPage(0)">Sampul</button>
+        <button onclick="goToPage(1)">Isi</button>
+        <button onclick="goToPage(2)">BAB I</button>
+        <button onclick="goToPage(3)">BAB II</button>
+        <button onclick="goToPage(4)">BAB III</button>
+        <button onclick="goToPage(5)">BAB IV</button>
+        <button onclick="goToPage(6)">BAB V</button>
+        <button onclick="goToPage(7)">Pustaka</button>
+      </div>
+    </div>
 
   </main>
 
@@ -1241,10 +1664,14 @@
     const nextBtn = document.getElementById("nextBtn");
     const pageText = document.getElementById("pageText");
     const progressBar = document.getElementById("progressBar");
+    const tocButtons = document.querySelectorAll(".toc button");
 
     let currentPage = 0;
     let isAnimating = false;
 
+    /*
+      Memperbarui halaman aktif dan menjalankan animasi 3D.
+    */
     function updatePage(direction = "next") {
       if (isAnimating) return;
 
@@ -1253,17 +1680,17 @@
       pages.forEach((page, index) => {
         page.classList.remove(
           "active",
-          "slide-next",
-          "slide-prev"
+          "flip-next",
+          "flip-prev"
         );
 
         if (index === currentPage) {
           page.classList.add("active");
 
           if (direction === "next") {
-            page.classList.add("slide-next");
+            page.classList.add("flip-next");
           } else {
-            page.classList.add("slide-prev");
+            page.classList.add("flip-prev");
           }
 
           page.scrollTop = 0;
@@ -1281,20 +1708,39 @@
 
       progressBar.style.width = `${progress}%`;
 
+      // Tandai tombol daftar isi yang aktif
+      tocButtons.forEach((button) => {
+        button.classList.remove("active");
+      });
+
+      if (tocButtons[currentPage]) {
+        tocButtons[currentPage].classList.add("active");
+      }
+
       setTimeout(() => {
+        pages.forEach((page) => {
+          page.classList.remove("flip-next", "flip-prev");
+        });
+
         isAnimating = false;
-      }, 550);
+      }, 850);
     }
 
     function nextPage() {
-      if (currentPage < pages.length - 1) {
+      if (
+        currentPage < pages.length - 1 &&
+        !isAnimating
+      ) {
         currentPage++;
         updatePage("next");
       }
     }
 
     function previousPage() {
-      if (currentPage > 0) {
+      if (
+        currentPage > 0 &&
+        !isAnimating
+      ) {
         currentPage--;
         updatePage("prev");
       }
@@ -1302,19 +1748,25 @@
 
     function goToPage(pageIndex) {
       if (
-        pageIndex >= 0 &&
-        pageIndex < pages.length &&
-        pageIndex !== currentPage
+        pageIndex < 0 ||
+        pageIndex >= pages.length ||
+        pageIndex === currentPage ||
+        isAnimating
       ) {
-        const direction =
-          pageIndex > currentPage ? "next" : "prev";
-
-        currentPage = pageIndex;
-        updatePage(direction);
+        return;
       }
+
+      const direction =
+        pageIndex > currentPage ? "next" : "prev";
+
+      currentPage = pageIndex;
+      updatePage(direction);
     }
 
-    // Navigasi menggunakan keyboard
+    /* =========================
+       KEYBOARD NAVIGATION
+    ========================= */
+
     document.addEventListener("keydown", function(event) {
       if (event.key === "ArrowRight") {
         nextPage();
@@ -1333,34 +1785,39 @@
       }
     });
 
-    // Swipe di HP
-    let touchStartX = 0;
-    let touchEndX = 0;
+    /* =========================
+       SWIPE DI HP
+    ========================= */
 
     const book = document.querySelector(".book");
 
+    let touchStartX = 0;
+    let touchEndX = 0;
+
     book.addEventListener("touchstart", function(event) {
       touchStartX = event.changedTouches[0].screenX;
-    });
+    }, { passive: true });
 
     book.addEventListener("touchend", function(event) {
       touchEndX = event.changedTouches[0].screenX;
       handleSwipe();
-    });
+    }, { passive: true });
 
     function handleSwipe() {
-      const swipeDistance = touchEndX - touchStartX;
+      const distance = touchEndX - touchStartX;
 
-      if (Math.abs(swipeDistance) < 50) return;
+      if (Math.abs(distance) < 50) {
+        return;
+      }
 
-      if (swipeDistance < 0) {
+      if (distance < 0) {
         nextPage();
       } else {
         previousPage();
       }
     }
 
-    // Inisialisasi
+    /* Inisialisasi tampilan */
     updatePage("next");
   </script>
 </body>
