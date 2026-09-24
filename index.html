@@ -1,1824 +1,2758 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Proposal Geografi | Persebaran RTH Parung Panjang</title>
-
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap');
-
-    :root {
-      --navy: #102a43;
-      --navy-dark: #071b2d;
-      --blue: #1d4e89;
-      --blue-light: #eaf3fb;
-      --gold: #d9a441;
-      --gold-light: #f5e4b7;
-      --white: #ffffff;
-      --text: #263238;
-      --muted: #667085;
-      --page-width: 100%;
-      --page-height: 720px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      min-height: 100vh;
-      padding: 25px 15px;
-      font-family: "Inter", sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at 10% 10%, #d9ecfb, transparent 32%),
-        radial-gradient(circle at 90% 90%, #e8def6, transparent 32%),
-        linear-gradient(135deg, #eef4f8, #dce7f0);
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0.25;
-      background-image:
-        linear-gradient(rgba(16, 42, 67, 0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(16, 42, 67, 0.025) 1px, transparent 1px);
-      background-size: 35px 35px;
-      z-index: -1;
-    }
-
-    button {
-      font-family: inherit;
-    }
-
-    .app {
-      width: min(1120px, 100%);
-      margin: auto;
-    }
-
-    /* =========================
-       TOPBAR
-    ========================= */
-
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-      padding: 14px 18px;
-      margin-bottom: 22px;
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.76);
-      backdrop-filter: blur(16px);
-      box-shadow: 0 10px 30px rgba(16, 42, 67, 0.08);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .brand img {
-      width: 50px;
-      height: 50px;
-      object-fit: contain;
-      border-radius: 10px;
-    }
-
-    .brand h1 {
-      color: var(--navy);
-      font-size: 15px;
-      font-weight: 800;
-      letter-spacing: 0.4px;
-    }
-
-    .brand p {
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    .top-actions {
-      display: flex;
-      gap: 8px;
-    }
-
-    .icon-button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      border: none;
-      border-radius: 12px;
-      background: var(--blue-light);
-      color: var(--navy);
-      font-size: 17px;
-      cursor: pointer;
-      transition: 0.25s ease;
-    }
-
-    .icon-button:hover {
-      color: white;
-      background: var(--blue);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 18px rgba(29, 78, 137, 0.2);
-    }
-
-    /* =========================
-       BOOK AREA
-    ========================= */
-
-    .book-scene {
-      width: 100%;
-      height: var(--page-height);
-      perspective: 2200px;
-      perspective-origin: center center;
-    }
-
-    .book {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      transform-style: preserve-3d;
-      border-radius: 12px 20px 20px 12px;
-      box-shadow:
-        0 30px 65px rgba(16, 42, 67, 0.22),
-        0 8px 15px rgba(16, 42, 67, 0.08);
-    }
-
-    /* Bagian punggung buku */
-    .book::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: -12px;
-      width: 20px;
-      z-index: -1;
-      border-radius: 10px 0 0 10px;
-      background:
-        linear-gradient(
-          90deg,
-          #071b2d,
-          #183c5b 45%,
-          #071b2d
-        );
-      box-shadow: inset -4px 0 5px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Bayangan di bawah buku */
-    .book::after {
-      content: "";
-      position: absolute;
-      z-index: -2;
-      left: 4%;
-      right: 2%;
-      bottom: -25px;
-      height: 35px;
-      border-radius: 50%;
-      background: rgba(16, 42, 67, 0.25);
-      filter: blur(15px);
-      transform: translateZ(-100px);
-    }
-
-    .page {
-      position: absolute;
-      inset: 0;
-      display: none;
-      overflow-y: auto;
-      padding: 55px 70px 65px;
-      border-radius: 12px 20px 20px 12px;
-      background:
-        linear-gradient(
-          90deg,
-          rgba(16, 42, 67, 0.055),
-          transparent 7%,
-          transparent 94%,
-          rgba(16, 42, 67, 0.035)
-        ),
-        #ffffff;
-      transform-origin: left center;
-      backface-visibility: hidden;
-      transform-style: preserve-3d;
-      scrollbar-width: thin;
-      scrollbar-color: var(--blue) #edf2f7;
-    }
-
-    .page::-webkit-scrollbar {
-      width: 7px;
-    }
-
-    .page::-webkit-scrollbar-thumb {
-      background: var(--blue);
-      border-radius: 20px;
-    }
-
-    .page.active {
-      display: block;
-      z-index: 2;
-    }
-
-    /*
-      Animasi halaman berputar seperti buku.
-      Halaman baru muncul dari sisi kanan.
-    */
-    .page.flip-next {
-      display: block;
-      z-index: 5;
-      animation: flipNext 0.85s cubic-bezier(0.22, 0.61, 0.36, 1);
-    }
-
-    .page.flip-prev {
-      display: block;
-      z-index: 5;
-      animation: flipPrev 0.85s cubic-bezier(0.22, 0.61, 0.36, 1);
-    }
-
-    @keyframes flipNext {
-      0% {
-        opacity: 0;
-        transform: rotateY(-90deg) translateX(30px);
-        transform-origin: left center;
-      }
-
-      45% {
-        opacity: 1;
-      }
-
-      100% {
-        opacity: 1;
-        transform: rotateY(0deg) translateX(0);
-        transform-origin: left center;
-      }
-    }
-
-    @keyframes flipPrev {
-      0% {
-        opacity: 0;
-        transform: rotateY(90deg) translateX(-30px);
-        transform-origin: right center;
-      }
-
-      45% {
-        opacity: 1;
-      }
-
-      100% {
-        opacity: 1;
-        transform: rotateY(0deg) translateX(0);
-        transform-origin: right center;
-      }
-    }
-
-    /* Garis tepi halaman */
-    .page::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 10px;
-      height: 100%;
-      pointer-events: none;
-      background: linear-gradient(
-        to left,
-        rgba(16, 42, 67, 0.07),
-        transparent
-      );
-    }
-
-    /* =========================
-       COVER
-    ========================= */
-
-    .cover {
-      display: none;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      text-align: center;
-      padding: 45px 30px;
-      background:
-        linear-gradient(
-          rgba(255, 255, 255, 0.91),
-          rgba(235, 246, 253, 0.97)
-        ),
-        radial-gradient(circle at center, #cbe6fa, transparent 65%);
-    }
-
-    .cover.active {
-      display: flex;
-    }
-
-    .cover.flip-next,
-    .cover.flip-prev {
-      display: flex;
-    }
-
-    .cover::after {
-      content: "";
-      position: absolute;
-      inset: 25px;
-      border: 2px solid rgba(29, 78, 137, 0.18);
-      border-radius: 14px;
-      pointer-events: none;
-    }
-
-    .cover-logo {
-      position: relative;
-      z-index: 1;
-      width: 145px;
-      height: 145px;
-      object-fit: contain;
-      margin-bottom: 25px;
-      filter: drop-shadow(0 12px 12px rgba(16, 42, 67, 0.15));
-      animation: floating 4s ease-in-out infinite;
-    }
-
-    @keyframes floating {
-      0%,
-      100% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(-10px);
-      }
-    }
-
-    .cover-label {
-      position: relative;
-      z-index: 1;
-      color: var(--blue);
-      font-size: 14px;
-      font-weight: 800;
-      letter-spacing: 2px;
-    }
-
-    .gold-line {
-      position: relative;
-      z-index: 1;
-      width: 100px;
-      height: 5px;
-      margin: 20px auto;
-      border-radius: 50px;
-      background: var(--gold);
-    }
-
-    .cover h2 {
-      position: relative;
-      z-index: 1;
-      max-width: 800px;
-      color: var(--navy);
-      font-family: "Playfair Display", serif;
-      font-size: clamp(24px, 4vw, 42px);
-      line-height: 1.25;
-      text-transform: uppercase;
-    }
-
-    .cover-info {
-      position: relative;
-      z-index: 1;
-      margin-top: 45px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.9;
-    }
-
-    .cover-info strong {
-      color: var(--navy);
-    }
-
-    /* =========================
-       TYPOGRAPHY
-    ========================= */
-
-    .page-tag {
-      position: absolute;
-      top: 25px;
-      right: 40px;
-      color: #98a2b3;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-    }
-
-    .chapter-label {
-      display: inline-block;
-      margin-bottom: 15px;
-      padding: 8px 15px;
-      border-radius: 30px;
-      color: white;
-      background: var(--blue);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1px;
-    }
-
-    .page h2 {
-      margin-bottom: 25px;
-      color: var(--navy);
-      font-family: "Playfair Display", serif;
-      font-size: clamp(27px, 4vw, 38px);
-      line-height: 1.2;
-    }
-
-    .page h3 {
-      margin-top: 27px;
-      margin-bottom: 12px;
-      padding-left: 12px;
-      border-left: 4px solid var(--gold);
-      color: var(--blue);
-      font-size: 18px;
-      line-height: 1.4;
-    }
-
-    .page h4 {
-      margin-top: 20px;
-      margin-bottom: 8px;
-      color: var(--navy);
-      font-size: 15px;
-    }
-
-    .page p {
-      margin-bottom: 13px;
-      font-size: 14px;
-      line-height: 1.85;
-      text-align: justify;
-    }
-
-    .page ul,
-    .page ol {
-      margin: 10px 0 18px;
-      padding-left: 25px;
-    }
-
-    .page li {
-      margin-bottom: 8px;
-      font-size: 14px;
-      line-height: 1.75;
-    }
-
-    .highlight {
-      margin: 20px 0;
-      padding: 16px 18px;
-      border-left: 5px solid var(--blue);
-      border-radius: 0 12px 12px 0;
-      background: var(--blue-light);
-    }
-
-    .highlight p {
-      margin-bottom: 0;
-    }
-
-    /* =========================
-       TABLE
-    ========================= */
-
-    .table-container {
-      width: 100%;
-      margin: 18px 0;
-      overflow-x: auto;
-      border: 1px solid #dce5ed;
-      border-radius: 12px;
-    }
-
-    table {
-      width: 100%;
-      min-width: 620px;
-      border-collapse: collapse;
-      font-size: 13px;
-    }
-
-    th {
-      padding: 13px;
-      color: white;
-      background: var(--navy);
-      text-align: left;
-      line-height: 1.5;
-    }
-
-    td {
-      padding: 12px 13px;
-      border-bottom: 1px solid #e5eaf0;
-      vertical-align: top;
-      line-height: 1.6;
-    }
-
-    tr:nth-child(even) td {
-      background: #f7fafc;
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    /* =========================
-       FLOW DIAGRAM
-    ========================= */
-
-    .flow {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin: 25px 0;
-    }
-
-    .flow-item {
-      min-width: 135px;
-      padding: 13px 15px;
-      border: 1px solid #c7dff2;
-      border-radius: 12px;
-      background: var(--blue-light);
-      color: var(--navy);
-      font-size: 12px;
-      font-weight: 700;
-      text-align: center;
-      transition: 0.25s ease;
-    }
-
-    .flow-item:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 18px rgba(29, 78, 137, 0.13);
-    }
-
-    .flow-arrow {
-      color: var(--gold);
-      font-size: 23px;
-      font-weight: 800;
-    }
-
-    /* =========================
-       5W + 1H CARD
-    ========================= */
-
-    .fivew-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 13px;
-      margin-top: 18px;
-    }
-
-    .fivew-card {
-      padding: 16px;
-      border: 1px solid #d8e5ef;
-      border-radius: 14px;
-      background: linear-gradient(135deg, #ffffff, #f4f9fd);
-      box-shadow: 0 5px 14px rgba(16, 42, 67, 0.045);
-      transition: 0.25s ease;
-    }
-
-    .fivew-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--blue);
-      box-shadow: 0 10px 20px rgba(29, 78, 137, 0.1);
-    }
-
-    .fivew-card .letter {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 34px;
-      height: 34px;
-      margin-bottom: 9px;
-      border-radius: 10px;
-      background: var(--navy);
-      color: white;
-      font-weight: 800;
-      font-size: 14px;
-    }
-
-    .fivew-card h4 {
-      margin: 0 0 7px;
-      color: var(--blue);
-      font-size: 14px;
-    }
-
-    .fivew-card p {
-      margin: 0;
-      font-size: 12px;
-      line-height: 1.65;
-      text-align: left;
-    }
-
-    /* =========================
-       REFERENCES
-    ========================= */
-
-    .reference {
-      padding-left: 25px;
-      text-indent: -25px;
-      margin-bottom: 14px;
-      font-size: 13px;
-      line-height: 1.75;
-      text-align: left !important;
-    }
-
-    /* =========================
-       PAGE NUMBER
-    ========================= */
-
-    .page-number {
-      position: absolute;
-      right: 40px;
-      bottom: 25px;
-      color: #98a2b3;
-      font-size: 11px;
-    }
-
-    /* =========================
-       NAVIGATION
-    ========================= */
-
-    .navigation {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-      margin-top: 24px;
-    }
-
-    .nav-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      min-width: 155px;
-      padding: 14px 20px;
-      border: none;
-      border-radius: 13px;
-      background: var(--navy);
-      color: white;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: 0.25s ease;
-    }
-
-    .nav-button:hover:not(:disabled) {
-      background: var(--blue);
-      transform: translateY(-3px);
-      box-shadow: 0 9px 20px rgba(16, 42, 67, 0.18);
-    }
-
-    .nav-button:disabled {
-      cursor: not-allowed;
-      opacity: 0.35;
-    }
-
-    .page-indicator {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .progress {
-      width: 180px;
-      height: 6px;
-      overflow: hidden;
-      border-radius: 50px;
-      background: #dbe5ed;
-    }
-
-    .progress-bar {
-      width: 0%;
-      height: 100%;
-      border-radius: 50px;
-      background: linear-gradient(90deg, var(--blue), var(--gold));
-      transition: width 0.45s ease;
-    }
-
-    /* =========================
-       MINI TABLE OF CONTENTS
-    ========================= */
-
-    .toc-wrapper {
-      margin-top: 22px;
-    }
-
-    .toc-title {
-      margin-bottom: 10px;
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    .toc {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 7px;
-    }
-
-    .toc button {
-      padding: 8px 11px;
-      border: 1px solid #cbdbea;
-      border-radius: 9px;
-      background: rgba(255, 255, 255, 0.8);
-      color: var(--navy);
-      font-size: 11px;
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
-
-    .toc button:hover,
-    .toc button.active {
-      border-color: var(--blue);
-      background: var(--blue);
-      color: white;
-      transform: translateY(-2px);
-    }
-
-    /* =========================
-       RESPONSIVE
-    ========================= */
-
-    @media (max-width: 800px) {
-      :root {
-        --page-height: 700px;
-      }
-
-      body {
-        padding: 12px 8px;
-      }
-
-      .topbar {
-        padding: 12px;
-        margin-bottom: 15px;
-      }
-
-      .brand img {
-        width: 42px;
-        height: 42px;
-      }
-
-      .brand h1 {
-        font-size: 11px;
-      }
-
-      .brand p {
-        font-size: 9px;
-      }
-
-      .icon-button {
-        width: 35px;
-        height: 35px;
-        font-size: 14px;
-      }
-
-      .page {
-        padding: 45px 27px 60px;
-      }
-
-      .page-tag {
-        top: 20px;
-        right: 25px;
-      }
-
-      .page-number {
-        right: 25px;
-        bottom: 22px;
-      }
-
-      .cover {
-        padding: 30px 22px;
-      }
-
-      .cover::after {
-        inset: 15px;
-      }
-
-      .cover-logo {
-        width: 105px;
-        height: 105px;
-      }
-
-      .cover h2 {
-        font-size: 25px;
-      }
-
-      .cover-label {
-        font-size: 11px;
-        letter-spacing: 1.3px;
-      }
-
-      .cover-info {
-        margin-top: 30px;
-        font-size: 11px;
-      }
-
-      .page h2 {
-        font-size: 28px;
-      }
-
-      .page p,
-      .page li {
-        font-size: 13px;
-      }
-
-      .fivew-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .navigation {
-        gap: 8px;
-      }
-
-      .nav-button {
-        min-width: 0;
-        flex: 1;
-        padding: 12px 8px;
-        font-size: 11px;
-      }
-
-      .progress {
-        width: 100px;
-      }
-
-      .toc button {
-        font-size: 10px;
-        padding: 7px 9px;
-      }
-    }
-
-    @media (max-width: 450px) {
-      :root {
-        --page-height: 680px;
-      }
-
-      .page {
-        padding-left: 21px;
-        padding-right: 21px;
-      }
-
-      .page h2 {
-        font-size: 25px;
-      }
-
-      .chapter-label {
-        font-size: 10px;
-      }
-
-      .flow-item {
-        min-width: 115px;
-        font-size: 11px;
-      }
-
-      .flow-arrow {
-        font-size: 18px;
-      }
-    }
-
-    /* =========================
-       PRINT MODE
-    ========================= */
-
-    @media print {
-      body {
-        padding: 0;
-        background: white;
-      }
-
-      .topbar,
-      .navigation,
-      .toc-wrapper {
-        display: none !important;
-      }
-
-      .book-scene {
-        height: auto;
-        perspective: none;
-      }
-
-      .book {
-        height: auto;
-        box-shadow: none;
-        transform: none;
-      }
-
-      .book::before,
-      .book::after {
-        display: none;
-      }
-
-      .page,
-      .page.active,
-      .cover,
-      .cover.active {
-        position: relative;
-        inset: auto;
-        display: block !important;
-        min-height: auto;
-        height: auto;
-        overflow: visible;
-        page-break-after: always;
-        padding: 35px;
-        animation: none !important;
-        transform: none !important;
-      }
-
-      .cover {
-        min-height: 100vh;
-      }
-
-      .page-number,
-      .page-tag {
-        display: none;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Logic Forge</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+:root{
+    --bg:#080b10;
+    --panel:#111722;
+    --panel2:#171e2b;
+    --border:#293447;
+    --text:#edf2f7;
+    --muted:#8995a8;
+    --accent:#62e6d5;
+    --danger:#ff7777;
+    --gold:#f5c451;
+    --green:#7ee2a8;
+}
+
+body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:
+        "JetBrains Mono",
+        "Cascadia Code",
+        Consolas,
+        monospace;
+}
+
+button,
+select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.app{
+    width:min(1100px,94%);
+    margin:auto;
+    padding:25px 0 50px;
+}
+
+/* ================= START SCREEN ================= */
+
+.start-screen{
+    min-height:85vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.start-card{
+    width:min(650px,100%);
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:35px;
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.logo h1{
+    margin:0;
+    font-size:38px;
+    letter-spacing:4px;
+}
+
+.logo p{
+    color:var(--muted);
+    font-size:12px;
+    margin-top:10px;
+}
+
+.start-info{
+    background:var(--panel2);
+    border:1px solid var(--border);
+    padding:18px;
+    border-radius:9px;
+    line-height:1.7;
+    font-size:12px;
+    color:var(--muted);
+    margin-bottom:20px;
+}
+
+.start-info strong{
+    color:var(--accent);
+}
+
+.difficulty-title{
+    font-size:13px;
+    margin-bottom:10px;
+}
+
+.difficulties{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:7px;
+}
+
+.diff{
+    padding:13px 5px;
+    border:1px solid var(--border);
+    border-radius:8px;
+    background:#202938;
+    color:var(--muted);
+    text-align:center;
+}
+
+.diff:hover{
+    border-color:#617089;
+}
+
+.diff.selected{
+    color:var(--accent);
+    border-color:var(--accent);
+    background:#123b37;
+}
+
+.diff small{
+    display:block;
+    font-size:9px;
+    margin-top:5px;
+}
+
+.start-btn{
+    width:100%;
+    margin-top:20px;
+    padding:15px;
+    background:#123b37;
+    border:1px solid #3d968b;
+    color:var(--accent);
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.start-btn:hover{
+    background:#174941;
+}
+
+/* ================= HEADER ================= */
+
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    gap:20px;
+    padding-bottom:18px;
+    border-bottom:1px solid var(--border);
+    margin-bottom:18px;
+}
+
+.logo-game h1{
+    margin:0;
+    font-size:24px;
+    letter-spacing:2px;
+}
+
+.logo-game p{
+    margin:6px 0 0;
+    color:var(--muted);
+    font-size:11px;
+}
+
+/* ================= STATS ================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:7px;
+    margin-bottom:15px;
+}
+
+.stat{
+    background:var(--panel);
+    border:1px solid var(--border);
+    padding:10px;
+    border-radius:7px;
+    font-size:10px;
+}
+
+.stat span{
+    display:block;
+    color:var(--muted);
+    margin-bottom:5px;
+}
+
+.stat strong{
+    font-size:16px;
+    color:var(--accent);
+}
+
+.timer-normal{
+    color:var(--accent)!important;
+}
+
+.timer-warning{
+    color:var(--gold)!important;
+}
+
+.timer-danger{
+    color:var(--danger)!important;
+}
+
+/* ================= MAIN ================= */
+
+.main{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 280px;
+    gap:15px;
+}
+
+.panel{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:18px;
+}
+
+.objective{
+    color:var(--muted);
+    font-size:11px;
+    line-height:1.7;
+}
+
+.objective strong{
+    color:var(--text);
+}
+
+/* ================= TIMER BAR ================= */
+
+.timebar{
+    height:7px;
+    background:#202938;
+    border-radius:20px;
+    overflow:hidden;
+    margin:15px 0;
+}
+
+.timebar-inner{
+    height:100%;
+    width:100%;
+    background:var(--accent);
+    transition:width .1s linear;
+}
+
+/* ================= BOARD ================= */
+
+.board{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:8px;
+    min-height:130px;
+    margin:20px 0;
+}
+
+.tile{
+    width:55px;
+    height:55px;
+    background:#202938;
+    color:white;
+    border:1px solid #364156;
+    border-radius:8px;
+    font-size:17px;
+    font-weight:bold;
+    transition:.12s;
+}
+
+.tile:hover{
+    transform:translateY(-2px);
+    border-color:#64748b;
+}
+
+.tile.selected{
+    background:#123b37;
+    color:var(--accent);
+    border-color:var(--accent);
+    transform:translateY(-4px);
+}
+
+.tile.correct{
+    background:#183329;
+    border-color:#5ac28f;
+    color:#a6f0c7;
+}
+
+/* ================= BUTTONS ================= */
+
+.operations{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:8px;
+}
+
+.btn{
+    background:#202938;
+    color:var(--text);
+    border:1px solid var(--border);
+    border-radius:7px;
+    padding:11px;
+}
+
+.btn:hover{
+    background:#263145;
+    border-color:#617089;
+}
+
+.btn:disabled{
+    opacity:.35;
+    cursor:not-allowed;
+}
+
+.primary{
+    color:var(--accent);
+    border-color:#287d73;
+}
+
+.danger{
+    color:var(--danger);
+}
+
+.bottom-actions{
+    display:flex;
+    gap:8px;
+    margin-top:9px;
+}
+
+.bottom-actions .btn{
+    flex:1;
+}
+
+/* ================= SIDE ================= */
+
+.side h3{
+    font-size:12px;
+    margin:0 0 8px;
+}
+
+.side-section{
+    background:var(--panel2);
+    border:1px solid var(--border);
+    border-radius:7px;
+    padding:11px;
+    margin-bottom:12px;
+    color:var(--muted);
+    font-size:10px;
+    line-height:1.7;
+}
+
+.side-section strong{
+    color:var(--accent);
+}
+
+/* ================= LOG ================= */
+
+.log{
+    border-top:1px solid var(--border);
+    margin-top:15px;
+    padding-top:9px;
+    height:115px;
+    overflow-y:auto;
+    color:var(--muted);
+    font-size:9px;
+    line-height:1.7;
+}
+
+.log div{
+    border-bottom:1px solid #1c2432;
+    padding:3px 0;
+}
+
+.good{
+    color:var(--green)!important;
+}
+
+.bad{
+    color:var(--danger)!important;
+}
+
+/* ================= MODAL ================= */
+
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.78);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:100;
+}
+
+.overlay.show{
+    display:flex;
+}
+
+.modal{
+    width:min(500px,100%);
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:28px;
+    text-align:center;
+}
+
+.modal h2{
+    margin-top:0;
+}
+
+.final-score{
+    font-size:44px;
+    color:var(--accent);
+    font-weight:bold;
+    margin:15px;
+}
+
+.result-line{
+    color:var(--muted);
+    font-size:11px;
+    line-height:1.8;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:750px){
+
+    .stats{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .main{
+        grid-template-columns:1fr;
+    }
+
+    .difficulties{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+}
+
+@media(max-width:450px){
+
+    .start-card{
+        padding:22px;
+    }
+
+    .logo h1{
+        font-size:29px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .tile{
+        width:45px;
+        height:45px;
+        font-size:14px;
+    }
+
+    .operations{
+        grid-template-columns:1fr;
+    }
+
+}
+</style>
 </head>
 
 <body>
-  <main class="app">
 
-    <!-- =========================
-         HEADER
-    ========================= -->
+<!-- =====================================================
+     START SCREEN
+===================================================== -->
 
-    <header class="topbar">
-      <div class="brand">
-        <img
-          src="logoSMAN5.png"
-          alt="Logo SMAN 5 Bogor"
-        />
+<div id="startScreen" class="start-screen">
 
-        <div>
-          <h1>PROPOSAL PENELITIAN GEOGRAFI</h1>
-          <p>SMAN 5 Bogor • Kelas X</p>
-        </div>
-      </div>
+<div class="start-card">
 
-      <div class="top-actions">
-        <button
-          class="icon-button"
-          onclick="goToPage(0)"
-          title="Kembali ke sampul"
-        >
-          ⌂
-        </button>
+    <div class="logo">
 
-        <button
-          class="icon-button"
-          onclick="window.print()"
-          title="Cetak proposal"
-        >
-          🖨
-        </button>
-      </div>
-    </header>
+        <h1>LOGIC FORGE</h1>
 
-    <!-- =========================
-         BUKU DIGITAL
-    ========================= -->
+        <p>
+            TIMED ALGORITHMIC STRATEGY
+        </p>
 
-    <section class="book-scene">
-      <div class="book">
-
-        <!-- =========================
-             HALAMAN 1: COVER
-        ========================= -->
-
-        <article class="page cover active">
-          <img
-            class="cover-logo"
-            src="logoSMAN5.png"
-            alt="Logo SMAN 5 Bogor"
-          />
-
-          <div class="cover-label">
-            PROPOSAL PENELITIAN GEOGRAFI
-          </div>
-
-          <div class="gold-line"></div>
-
-          <h2>
-            Identifikasi Persebaran Ruang Terbuka Hijau
-            di Kawasan Perkotaan Parung Panjang
-          </h2>
-
-          <div class="gold-line"></div>
-
-          <div class="cover-info">
-            <strong>Disusun untuk memenuhi tugas mata pelajaran Geografi</strong>
-            <br />
-            SMAN 5 Bogor
-            <br />
-            Tahun Pelajaran 2026/2027
-          </div>
-
-          <span class="page-number">1</span>
-        </article>
-
-        <!-- =========================
-             HALAMAN 2: DAFTAR ISI
-        ========================= -->
-
-        <article class="page">
-          <span class="page-tag">Pendahuluan</span>
-          <span class="chapter-label">DAFTAR ISI</span>
-
-          <h2>Daftar Isi</h2>
-
-          <div class="highlight">
-            <p>
-              Proposal ini disajikan dalam bentuk buku digital.
-              Gunakan tombol navigasi, tombol panah pada keyboard,
-              atau geser layar pada perangkat seluler untuk berpindah halaman.
-            </p>
-          </div>
-
-          <h3>Susunan Proposal</h3>
-
-          <ol>
-            <li>BAB I — Pendahuluan</li>
-            <li>BAB II — Tinjauan Pustaka</li>
-            <li>BAB III — Metodologi Penelitian</li>
-            <li>BAB IV — Rencana Hasil Penelitian</li>
-            <li>BAB V — Penutup</li>
-            <li>Daftar Pustaka</li>
-          </ol>
-
-          <h3>Navigasi Cepat</h3>
-
-          <div class="toc">
-            <button onclick="goToPage(0)">Sampul</button>
-            <button onclick="goToPage(2)">BAB I</button>
-            <button onclick="goToPage(3)">BAB II</button>
-            <button onclick="goToPage(4)">BAB III</button>
-            <button onclick="goToPage(5)">BAB IV</button>
-            <button onclick="goToPage(6)">BAB V</button>
-            <button onclick="goToPage(7)">Daftar Pustaka</button>
-          </div>
-
-          <span class="page-number">2</span>
-        </article>
-
-        <!-- =========================
-             HALAMAN 3: BAB I
-        ========================= -->
-
-        <article class="page">
-          <span class="page-tag">Bab I</span>
-          <span class="chapter-label">BAB I</span>
-
-          <h2>Pendahuluan</h2>
-
-          <h3>1.1 Latar Belakang</h3>
-
-          <p>
-            Ruang terbuka hijau merupakan bagian penting dalam kawasan
-            perkotaan. Ruang terbuka hijau dapat berupa taman kota,
-            jalur hijau, lapangan, hutan kota, pemakaman, serta area
-            vegetasi lain yang memiliki fungsi ekologis, sosial, dan
-            estetika.
-          </p>
-
-          <p>
-            Perkembangan kawasan perkotaan dapat menyebabkan perubahan
-            penggunaan lahan. Pertumbuhan permukiman, perdagangan,
-            transportasi, dan kegiatan ekonomi berpotensi mengurangi
-            ruang terbuka yang memiliki vegetasi.
-          </p>
-
-          <p>
-            Kawasan Perkotaan Parung Panjang merupakan wilayah yang
-            mengalami perkembangan aktivitas penduduk dan pembangunan.
-            Oleh karena itu, diperlukan identifikasi mengenai persebaran
-            ruang terbuka hijau untuk mengetahui lokasi dan pola
-            persebarannya.
-          </p>
-
-          <p>
-            Penelitian ini diharapkan dapat memberikan gambaran awal
-            mengenai keberadaan ruang terbuka hijau di Kawasan Perkotaan
-            Parung Panjang melalui pemetaan dan observasi sederhana.
-          </p>
-
-          <h3>1.2 Identifikasi Penelitian Berdasarkan 5W+1H</h3>
-
-          <p>
-            Pendekatan 5W+1H digunakan untuk memperjelas objek, pihak
-            yang berkaitan, lokasi, waktu, alasan, dan metode penelitian.
-          </p>
-
-          <div class="fivew-grid">
-            <div class="fivew-card">
-              <div class="letter">W</div>
-              <h4>What — Apa?</h4>
-              <p>
-                Penelitian ini mengidentifikasi persebaran Ruang Terbuka
-                Hijau (RTH) di kawasan perkotaan.
-              </p>
-            </div>
-
-            <div class="fivew-card">
-              <div class="letter">W</div>
-              <h4>Who — Siapa?</h4>
-              <p>
-                Pihak yang berkaitan adalah masyarakat dan pengelola
-                ruang terbuka hijau di kawasan penelitian.
-              </p>
-            </div>
-
-            <div class="fivew-card">
-              <div class="letter">W</div>
-              <h4>Where — Di mana?</h4>
-              <p>
-                Penelitian dilakukan di Kawasan Perkotaan Parung Panjang,
-                Kabupaten Bogor.
-              </p>
-            </div>
-
-            <div class="fivew-card">
-              <div class="letter">W</div>
-              <h4>When — Kapan?</h4>
-              <p>
-                Penelitian direncanakan dilaksanakan pada September hingga
-                Oktober 2026, atau sesuai jadwal penelitian.
-              </p>
-            </div>
-
-            <div class="fivew-card">
-              <div class="letter">W</div>
-              <h4>Why — Mengapa?</h4>
-              <p>
-                Untuk mengetahui lokasi, jenis, dan pola persebaran RTH
-                di tengah perkembangan kawasan perkotaan.
-              </p>
-            </div>
-
-            <div class="fivew-card">
-              <div class="letter">H</div>
-              <h4>How — Bagaimana?</h4>
-              <p>
-                Penelitian dilakukan melalui studi pustaka, observasi,
-                dokumentasi, pemetaan, dan analisis deskriptif keruangan.
-              </p>
-            </div>
-          </div>
-
-          <h3>1.3 Rumusan Masalah</h3>
-
-          <ol>
-            <li>
-              Di mana saja lokasi ruang terbuka hijau di Kawasan
-              Perkotaan Parung Panjang?
-            </li>
-            <li>
-              Bagaimana persebaran ruang terbuka hijau di kawasan tersebut?
-            </li>
-            <li>
-              Apa saja jenis ruang terbuka hijau yang dapat diidentifikasi?
-            </li>
-          </ol>
-
-          <h3>1.4 Tujuan Penelitian</h3>
-
-          <ol>
-            <li>Mengidentifikasi lokasi ruang terbuka hijau.</li>
-            <li>
-              Mendeskripsikan pola persebaran ruang terbuka hijau.
-            </li>
-            <li>
-              Mengelompokkan ruang terbuka hijau berdasarkan jenisnya.
-            </li>
-          </ol>
-
-          <h3>1.5 Manfaat Penelitian</h3>
-
-          <ul>
-            <li>
-              Menambah pengetahuan mengenai pemanfaatan ruang di kawasan
-              perkotaan.
-            </li>
-            <li>
-              Menjadi informasi awal mengenai persebaran ruang terbuka hijau.
-            </li>
-            <li>
-              Melatih kemampuan pemetaan dan analisis data geografis.
-            </li>
-          </ul>
-
-          <span class="page-number">3</span>
-        </article>
-
-        <!-- =========================
-             HALAMAN 4: BAB II
-        ========================= -->
-
-        <article class="page">
-          <span class="page-tag">Bab II</span>
-          <span class="chapter-label">BAB II</span>
-
-          <h2>Tinjauan Pustaka</h2>
-
-          <h3>2.1 Pengertian Ruang Terbuka Hijau</h3>
-
-          <p>
-            Ruang terbuka hijau adalah area memanjang atau mengelompok
-            yang penggunaannya lebih bersifat terbuka dan ditumbuhi
-            tanaman, baik yang tumbuh secara alami maupun yang sengaja
-            ditanam.
-          </p>
-
-          <h3>2.2 Fungsi Ruang Terbuka Hijau</h3>
-
-          <ul>
-            <li>
-              <strong>Fungsi ekologis:</strong> membantu menyerap karbon,
-              menghasilkan oksigen, dan mengurangi suhu lingkungan.
-            </li>
-            <li>
-              <strong>Fungsi hidrologis:</strong> membantu penyerapan air
-              hujan dan mengurangi limpasan permukaan.
-            </li>
-            <li>
-              <strong>Fungsi sosial:</strong> menjadi tempat berkumpul,
-              berolahraga, dan melakukan kegiatan masyarakat.
-            </li>
-            <li>
-              <strong>Fungsi estetika:</strong> memperindah lingkungan
-              perkotaan.
-            </li>
-          </ul>
-
-          <h3>2.3 Persebaran Ruang</h3>
-
-          <p>
-            Persebaran ruang merupakan pola penyebaran suatu objek
-            di permukaan bumi. Dalam penelitian ini, persebaran ruang
-            terbuka hijau dianalisis berdasarkan lokasi, jarak,
-            keterhubungan, dan pola pengelompokannya.
-          </p>
-
-          <h3>2.4 Pemetaan</h3>
-
-          <p>
-            Pemetaan merupakan proses pengumpulan, pengolahan, dan
-            penyajian informasi mengenai suatu wilayah dalam bentuk peta.
-            Peta dapat digunakan untuk menunjukkan lokasi, distribusi,
-            dan hubungan antarobjek geografis.
-          </p>
-
-          <h3>2.5 Penelitian Terdahulu</h3>
-
-          <p>
-            Penelitian terdahulu mengenai ruang terbuka hijau di kawasan
-            Parung Panjang telah membahas ketersediaan, kebutuhan, dan
-            pola persebaran ruang terbuka hijau. Penelitian ini mengambil
-            fokus yang lebih sederhana, yaitu identifikasi lokasi dan
-            persebaran melalui observasi serta pemetaan.
-          </p>
-
-          <div class="highlight">
-            <p>
-              <strong>Catatan:</strong> hasil penelitian terdahulu digunakan
-              sebagai pembanding, bukan sebagai hasil penelitian ini.
-            </p>
-          </div>
-
-          <span class="page-number">4</span>
-        </article>
-
-        <!-- =========================
-             HALAMAN 5: BAB III
-        ========================= -->
-
-        <article class="page">
-          <span class="page-tag">Bab III</span>
-          <span class="chapter-label">BAB III</span>
-
-          <h2>Metodologi Penelitian</h2>
-
-          <h3>3.1 Jenis Penelitian</h3>
-
-          <p>
-            Penelitian ini menggunakan metode deskriptif dengan pendekatan
-            keruangan. Metode tersebut digunakan untuk menggambarkan
-            lokasi dan persebaran ruang terbuka hijau di wilayah penelitian.
-          </p>
-
-          <h3>3.2 Lokasi dan Waktu Penelitian</h3>
-
-          <p>
-            Penelitian dilaksanakan di Kawasan Perkotaan Parung Panjang,
-            Kabupaten Bogor. Waktu penelitian direncanakan pada September
-            hingga Oktober 2026, atau disesuaikan dengan jadwal kegiatan
-            penelitian.
-          </p>
-
-          <h3>3.3 Objek Penelitian</h3>
-
-          <p>
-            Objek penelitian adalah ruang terbuka hijau yang ditemukan
-            di kawasan penelitian, seperti taman, lapangan bervegetasi,
-            jalur hijau, hutan kota, dan ruang terbuka lain yang memiliki
-            unsur vegetasi.
-          </p>
-
-          <h3>3.4 Jenis dan Sumber Data</h3>
-
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>Jenis Data</th>
-                  <th>Sumber Data</th>
-                  <th>Kegunaan</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <tr>
-                  <td>Data primer</td>
-                  <td>Observasi lapangan dan dokumentasi</td>
-                  <td>
-                    Mengidentifikasi lokasi, jenis, dan kondisi RTH.
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>Data sekunder</td>
-                  <td>
-                    Peta dasar, citra satelit, dokumen tata ruang,
-                    dan penelitian terdahulu.
-                  </td>
-                  <td>
-                    Menentukan batas wilayah dan membantu proses pemetaan.
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3>3.5 Teknik Pengumpulan Data</h3>
-
-          <ol>
-            <li>
-              <strong>Observasi:</strong> mengamati ruang terbuka hijau
-              secara langsung.
-            </li>
-            <li>
-              <strong>Dokumentasi:</strong> mengambil foto dan mencatat
-              informasi lokasi.
-            </li>
-            <li>
-              <strong>Studi pustaka:</strong> mencari informasi dari buku,
-              peraturan, artikel, dan penelitian terdahulu.
-            </li>
-            <li>
-              <strong>Pemetaan:</strong> mencatat titik lokasi pada peta
-              digital atau peta dasar.
-            </li>
-          </ol>
-
-          <h3>3.6 Teknik Analisis Data</h3>
-
-          <p>
-            Data dianalisis secara deskriptif dengan mengelompokkan
-            ruang terbuka hijau berdasarkan jenis, lokasi, dan pola
-            persebarannya. Hasil analisis disajikan dalam bentuk tabel,
-            deskripsi, foto, dan peta persebaran.
-          </p>
-
-          <span class="page-number">5</span>
-        </article>
-
-        <!-- =========================
-             HALAMAN 6: BAB IV
-        ========================= -->
-
-        <article class="page">
-          <span class="page-tag">Bab IV</span>
-          <span class="chapter-label">BAB IV</span>
-
-          <h2>Rencana Hasil Penelitian</h2>
-
-          <h3>4.1 Rencana Produk Penelitian</h3>
-
-          <p>
-            Penelitian ini direncanakan menghasilkan peta persebaran
-            ruang terbuka hijau di Kawasan Perkotaan Parung Panjang.
-            Peta tersebut akan memuat titik atau area ruang terbuka hijau
-            yang berhasil diidentifikasi.
-          </p>
-
-          <h3>4.2 Rencana Tabel Data</h3>
-
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>No.</th>
-                  <th>Nama/Lokasi RTH</th>
-                  <th>Jenis RTH</th>
-                  <th>Kondisi</th>
-                  <th>Keterangan</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Diisi berdasarkan hasil survei</td>
-                  <td>Taman/Lapangan/Jalur Hijau</td>
-                  <td>Baik/Sedang/Kurang</td>
-                  <td>Hasil observasi</td>
-                </tr>
-
-                <tr>
-                  <td>2</td>
-                  <td>Diisi berdasarkan hasil survei</td>
-                  <td>Taman/Lapangan/Jalur Hijau</td>
-                  <td>Baik/Sedang/Kurang</td>
-                  <td>Hasil observasi</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3>4.3 Alur Penelitian</h3>
-
-          <div class="flow">
-            <div class="flow-item">Menentukan Topik</div>
-            <div class="flow-arrow">→</div>
-            <div class="flow-item">Studi Pustaka</div>
-            <div class="flow-arrow">→</div>
-            <div class="flow-item">Pengumpulan Data</div>
-            <div class="flow-arrow">→</div>
-            <div class="flow-item">Pemetaan</div>
-            <div class="flow-arrow">→</div>
-            <div class="flow-item">Analisis</div>
-            <div class="flow-arrow">→</div>
-            <div class="flow-item">Kesimpulan</div>
-          </div>
-
-          <h3>4.4 Rencana Penyajian Hasil</h3>
-
-          <ul>
-            <li>Peta persebaran ruang terbuka hijau.</li>
-            <li>Tabel lokasi dan jenis ruang terbuka hijau.</li>
-            <li>Dokumentasi foto lapangan.</li>
-            <li>Deskripsi pola persebaran.</li>
-          </ul>
-
-          <div class="highlight">
-            <p>
-              Peta akhir harus dibuat berdasarkan lokasi yang benar-benar
-              ditemukan melalui sumber yang dapat diverifikasi atau
-              hasil observasi lapangan.
-            </p>
-          </div>
-
-          <span class="page-number">6</span>
-        </article>
-
-        <!-- =========================
-             HALAMAN 7: BAB V
-        ========================= -->
-
-        <article class="page">
-          <span class="page-tag">Bab V</span>
-          <span class="chapter-label">BAB V</span>
-
-          <h2>Penutup</h2>
-
-          <h3>5.1 Kesimpulan Sementara</h3>
-
-          <p>
-            Ruang terbuka hijau memiliki peran penting dalam menjaga
-            keseimbangan lingkungan kawasan perkotaan. Identifikasi
-            persebaran ruang terbuka hijau di Kawasan Perkotaan Parung
-            Panjang diperlukan untuk mengetahui lokasi, jenis, dan pola
-            persebarannya.
-          </p>
-
-          <p>
-            Melalui penelitian ini, data ruang terbuka hijau akan
-            dikumpulkan melalui observasi, dokumentasi, studi pustaka,
-            dan pemetaan. Hasilnya diharapkan dapat memberikan gambaran
-            mengenai kondisi persebaran ruang terbuka hijau di wilayah
-            penelitian.
-          </p>
-
-          <h3>5.2 Saran</h3>
-
-          <ol>
-            <li>
-              Pengumpulan data sebaiknya dilakukan dengan teliti dan
-              mencatat koordinat atau lokasi secara jelas.
-            </li>
-            <li>
-              Setiap lokasi yang dimasukkan ke dalam peta perlu
-              diverifikasi terlebih dahulu.
-            </li>
-            <li>
-              Penelitian lanjutan dapat membahas luas, kualitas, dan
-              kecukupan ruang terbuka hijau.
-            </li>
-          </ol>
-
-          <div class="highlight">
-            <p>
-              Proposal ini merupakan rancangan penelitian. Data dan
-              hasil akhir akan disesuaikan dengan temuan lapangan.
-            </p>
-          </div>
-
-          <span class="page-number">7</span>
-        </article>
-
-        <!-- =========================
-             HALAMAN 8: DAFTAR PUSTAKA
-        ========================= -->
-
-        <article class="page">
-          <span class="page-tag">Referensi</span>
-          <span class="chapter-label">DAFTAR PUSTAKA</span>
-
-          <h2>Daftar Pustaka</h2>
-
-          <p class="reference">
-            Pemerintah Kabupaten Bogor. 2021. Peraturan Bupati Bogor
-            Nomor 44 Tahun 2021 tentang Rencana Detail Tata Ruang
-            Kawasan Perkotaan Parung Panjang Tahun 2021–2041.
-          </p>
-
-          <p class="reference">
-            Republik Indonesia. 2007. Undang-Undang Nomor 26 Tahun 2007
-            tentang Penataan Ruang.
-          </p>
-
-          <p class="reference">
-            Republik Indonesia. 2008. Peraturan Menteri Dalam Negeri
-            Nomor 1 Tahun 2007 tentang Penataan Ruang Terbuka Hijau
-            Kawasan Perkotaan.
-          </p>
-
-          <p class="reference">
-            Kementerian Pekerjaan Umum. 2008. Peraturan Menteri Pekerjaan
-            Umum Nomor 05/PRT/M/2008 tentang Pedoman Penyediaan dan
-            Pemanfaatan Ruang Terbuka Hijau di Kawasan Perkotaan.
-          </p>
-
-          <p class="reference">
-            Universitas Pakuan. Kajian Ketersediaan dan Kebutuhan
-            Ruang Terbuka Hijau Kawasan Perkotaan Parung Panjang
-            Kabupaten Bogor.
-          </p>
-
-          <h3>Catatan Akhir</h3>
-
-          <p>
-            Sumber pustaka dapat ditambahkan atau disesuaikan kembali
-            berdasarkan sumber yang benar-benar digunakan dalam proses
-            penelitian.
-          </p>
-
-          <div class="highlight">
-            <p>
-              Terima kasih telah membaca proposal penelitian ini.
-            </p>
-          </div>
-
-          <span class="page-number">8</span>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- =========================
-         NAVIGASI BUKU
-    ========================= -->
-
-    <nav class="navigation">
-      <button
-        class="nav-button"
-        id="prevBtn"
-        onclick="previousPage()"
-      >
-        ← Sebelumnya
-      </button>
-
-      <div class="page-indicator">
-        <span id="pageText">Halaman 1 dari 8</span>
-
-        <div class="progress">
-          <div
-            class="progress-bar"
-            id="progressBar"
-          ></div>
-        </div>
-      </div>
-
-      <button
-        class="nav-button"
-        id="nextBtn"
-        onclick="nextPage()"
-      >
-        Berikutnya →
-      </button>
-    </nav>
-
-    <!-- DAFTAR ISI MINI -->
-    <div class="toc-wrapper">
-      <div class="toc-title">
-        Navigasi Halaman
-      </div>
-
-      <div class="toc" id="bottomToc">
-        <button onclick="goToPage(0)">Sampul</button>
-        <button onclick="goToPage(1)">Isi</button>
-        <button onclick="goToPage(2)">BAB I</button>
-        <button onclick="goToPage(3)">BAB II</button>
-        <button onclick="goToPage(4)">BAB III</button>
-        <button onclick="goToPage(5)">BAB IV</button>
-        <button onclick="goToPage(6)">BAB V</button>
-        <button onclick="goToPage(7)">Pustaka</button>
-      </div>
     </div>
 
-  </main>
 
-  <script>
-    const pages = document.querySelectorAll(".page");
-    const prevBtn = document.getElementById("prevBtn");
-    const nextBtn = document.getElementById("nextBtn");
-    const pageText = document.getElementById("pageText");
-    const progressBar = document.getElementById("progressBar");
-    const tocButtons = document.querySelectorAll(".toc button");
+    <div class="start-info">
 
-    let currentPage = 0;
-    let isAnimating = false;
+        Kamu akan menghadapi
+        <strong>5 puzzle</strong>.
 
-    /*
-      Memperbarui halaman aktif dan menjalankan animasi 3D.
-    */
-    function updatePage(direction = "next") {
-      if (isAnimating) return;
+        <br><br>
 
-      isAnimating = true;
+        Setiap puzzle mempunyai
+        <strong>move limit</strong> dan
+        <strong>batas waktu</strong>.
 
-      pages.forEach((page, index) => {
-        page.classList.remove(
-          "active",
-          "flip-next",
-          "flip-prev"
+        <br><br>
+
+        Score dipengaruhi oleh:
+
+        <br>
+
+        • Difficulty
+
+        <br>
+
+        • Sisa waktu
+
+        <br>
+
+        • Efisiensi moves
+
+        <br>
+
+        • Streak
+
+        <br><br>
+
+        Puzzle selalu dibuat dari
+        <strong>goal state</strong>,
+        sehingga selalu ada jalur solusi.
+
+    </div>
+
+
+    <div class="difficulty-title">
+        PILIH DIFFICULTY
+    </div>
+
+
+    <div class="difficulties">
+
+        <button class="diff"
+                data-level="1">
+
+            I
+
+            <small>
+                60s
+            </small>
+
+        </button>
+
+
+        <button class="diff"
+                data-level="2">
+
+            II
+
+            <small>
+                45
+            </small>
+
+        </button>
+
+
+        <button class="diff selected"
+                data-level="3">
+
+            III
+
+            <small>
+                35s
+            </small>
+
+        </button>
+
+
+        <button class="diff"
+                data-level="4">
+
+            IV
+
+            <small>
+                30s
+            </small>
+
+        </button>
+
+
+        <button class="diff"
+                data-level="5">
+
+            V
+
+            <small>
+                21s
+            </small>
+
+        </button>
+
+    </div>
+
+
+    <button
+        id="startBtn"
+        class="start-btn">
+
+        ▶ MULAI RUN
+
+    </button>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     GAME
+===================================================== -->
+
+<div
+    id="gameScreen"
+    class="app"
+    style="display:none;">
+
+<header>
+
+    <div class="logo-game">
+
+        <h1>LOGIC FORGE</h1>
+
+        <p>
+            5-PUZZLE STRATEGY RUN
+        </p>
+
+    </div>
+
+</header>
+
+
+<div class="stats">
+
+    <div class="stat">
+        <span>PUZZLE</span>
+        <strong id="puzzle">
+            1 / 5
+        </strong>
+    </div>
+
+    <div class="stat">
+        <span>MOVES</span>
+        <strong>
+            <span id="moves">0</span>
+            /
+            <span id="limit">0</span>
+        </strong>
+    </div>
+
+    <div class="stat">
+        <span>TIME</span>
+        <strong id="timer">
+            00.0
+        </strong>
+    </div>
+
+    <div class="stat">
+        <span>SCORE</span>
+        <strong id="score">
+            0
+        </strong>
+    </div>
+
+    <div class="stat">
+        <span>STREAK</span>
+        <strong id="streak">
+            0
+        </strong>
+    </div>
+
+    <div class="stat">
+        <span>DIFFICULTY</span>
+        <strong id="difficultyLabel">
+            III
+        </strong>
+    </div>
+
+</div>
+
+
+<div class="main">
+
+<section class="panel">
+
+    <div class="objective">
+
+        <strong>OBJECTIVE</strong>
+
+        <br><br>
+
+        Susun semua angka menjadi:
+
+        <br><br>
+
+        <strong>
+            1 → 2 → 3 → 4 → ... → N
+        </strong>
+
+        <br><br>
+
+        Jangan hanya mencari langkah
+        yang membuat posisi sekarang
+        terlihat lebih baik.
+
+        <br>
+
+        Cari langkah yang menghasilkan
+        <strong>state terbaik untuk langkah berikutnya.</strong>
+
+    </div>
+
+
+    <div class="timebar">
+
+        <div
+            id="timeBar"
+            class="timebar-inner">
+        </div>
+
+    </div>
+
+
+    <div
+        id="board"
+        class="board">
+    </div>
+
+
+    <div class="operations">
+
+        <button
+            id="reverseBtn"
+            class="btn">
+
+            ↔ REVERSE
+
+        </button>
+
+
+        <button
+            id="rotateBtn"
+            class="btn">
+
+            ↻ ROTATE RIGHT
+
+        </button>
+
+
+        <button
+            id="swapBtn"
+            class="btn">
+
+            ⇄ SWAP
+
+        </button>
+
+
+        <button
+            id="undoBtn"
+            class="btn">
+
+            ↶ UNDO
+
+        </button>
+
+    </div>
+
+
+    <div class="bottom-actions">
+
+        <button
+            id="resetBtn"
+            class="btn danger">
+
+            RESET PUZZLE
+
+        </button>
+
+
+        <button
+            id="nextBtn"
+            class="btn primary"
+            disabled>
+
+            NEXT →
+
+        </button>
+
+    </div>
+
+
+    <div
+        id="log"
+        class="log">
+    </div>
+
+</section>
+
+
+<aside class="panel side">
+
+    <h3>
+        REVERSE
+    </h3>
+
+    <div class="side-section">
+
+        Pilih minimal dua angka
+        bersebelahan.
+
+        <br><br>
+
+        Contoh:
+
+        <br>
+
+        1 2 <strong>3 4 5</strong> 6
+
+        <br><br>
+
+        menjadi:
+
+        <br>
+
+        1 2 <strong>5 4 3</strong> 6
+
+    </div>
+
+
+    <h3>
+        ROTATE
+    </h3>
+
+    <div class="side-section">
+
+        Seluruh array bergeser
+        satu posisi ke kanan.
+
+        <br><br>
+
+        1 2 3 4
+
+        <br>
+
+        ↓
+
+        <br>
+
+        4 1 2 3
+
+    </div>
+
+
+    <h3>
+        SWAP
+    </h3>
+
+    <div class="side-section">
+
+        Pilih tepat dua angka.
+
+        <br><br>
+
+        1 <strong>5</strong> 3 <strong>2</strong> 4
+
+        <br>
+
+        ↓
+
+        <br>
+
+        1 <strong>2</strong> 3 <strong>5</strong> 4
+
+    </div>
+
+
+    <h3>
+        SCORING
+    </h3>
+
+    <div class="side-section">
+
+        <strong>BASE</strong>
+        = 100
+
+        <br><br>
+
+        + bonus difficulty
+
+        <br>
+
+        + bonus sisa waktu
+
+        <br>
+
+        + bonus efisiensi move
+
+        <br>
+
+        + bonus streak
+
+        <br><br>
+
+        Jadi menyelesaikan puzzle
+        dengan cepat dan sedikit
+        move jauh lebih bernilai.
+
+    </div>
+
+</aside>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     RESULT MODAL
+===================================================== -->
+
+<div
+    id="overlay"
+    class="overlay">
+
+<div class="modal">
+
+    <h2 id="modalTitle">
+        PUZZLE COMPLETE
+    </h2>
+
+
+    <div
+        id="finalScore"
+        class="final-score">
+
+        +0
+
+    </div>
+
+
+    <div
+        id="resultText"
+        class="result-line">
+    </div>
+
+
+    <br>
+
+
+    <button
+        id="modalNext"
+        class="btn primary">
+
+        NEXT PUZZLE
+
+    </button>
+
+</div>
+
+</div>
+
+
+<script>
+
+"use strict";
+
+
+/* =====================================================
+   DOM
+===================================================== */
+
+const startScreen =
+    document.getElementById(
+        "startScreen"
+    );
+
+const gameScreen =
+    document.getElementById(
+        "gameScreen"
+    );
+
+const startBtn =
+    document.getElementById(
+        "startBtn"
+    );
+
+const difficultyButtons =
+    document.querySelectorAll(
+        ".diff"
+    );
+
+
+const board =
+    document.getElementById(
+        "board"
+    );
+
+const puzzleEl =
+    document.getElementById(
+        "puzzle"
+    );
+
+const movesEl =
+    document.getElementById(
+        "moves"
+    );
+
+const limitEl =
+    document.getElementById(
+        "limit"
+    );
+
+const timerEl =
+    document.getElementById(
+        "timer"
+    );
+
+const scoreEl =
+    document.getElementById(
+        "score"
+    );
+
+const streakEl =
+    document.getElementById(
+        "streak"
+    );
+
+const difficultyLabel =
+    document.getElementById(
+        "difficultyLabel"
+    );
+
+const timeBar =
+    document.getElementById(
+        "timeBar"
+    );
+
+const logEl =
+    document.getElementById(
+        "log"
+    );
+
+
+const reverseBtn =
+    document.getElementById(
+        "reverseBtn"
+    );
+
+const rotateBtn =
+    document.getElementById(
+        "rotateBtn"
+    );
+
+const swapBtn =
+    document.getElementById(
+        "swapBtn"
+    );
+
+const undoBtn =
+    document.getElementById(
+        "undoBtn"
+    );
+
+const resetBtn =
+    document.getElementById(
+        "resetBtn"
+    );
+
+const nextBtn =
+    document.getElementById(
+        "nextBtn"
+    );
+
+
+const overlay =
+    document.getElementById(
+        "overlay"
+    );
+
+const modalTitle =
+    document.getElementById(
+        "modalTitle"
+    );
+
+const finalScore =
+    document.getElementById(
+        "finalScore"
+    );
+
+const resultText =
+    document.getElementById(
+        "resultText"
+    );
+
+const modalNext =
+    document.getElementById(
+        "modalNext"
+    );
+
+
+/* =====================================================
+   SETTINGS
+===================================================== */
+
+let selectedDifficulty = 3;
+
+
+/*
+    Time deliberately decreases
+    slowly as difficulty increases.
+
+    I   = 25 sec
+    II  = 24 sec
+    III = 23 sec
+    IV  = 22 sec
+    V   = 21 sec
+*/
+
+const TIME_BY_LEVEL = {
+
+    1: 60,
+    2: 45,
+    3: 35,
+    4: 30,
+    5: 21
+
+};
+
+
+/*
+    Number of elements.
+*/
+
+const SIZE_BY_LEVEL = {
+
+    1: 7,
+    2: 9,
+    3: 11,
+    4: 13,
+    5: 15
+
+};
+
+
+/*
+    Scramble depth.
+
+    More difficult = deeper state.
+*/
+
+const DEPTH_BY_LEVEL = {
+
+    1: 7,
+    2: 10,
+    3: 13,
+    4: 16,
+    5: 19
+
+};
+
+
+/*
+    Move limits.
+
+    Tight, but generated puzzles
+    are constructed so that the
+    reverse scramble itself is
+    within this range.
+*/
+
+const MOVE_LIMIT_BY_LEVEL = {
+
+    1: 9,
+    2: 12,
+    3: 15,
+    4: 18,
+    5: 21
+
+};
+
+
+/* =====================================================
+   GAME STATE
+===================================================== */
+
+let game = {
+
+    array: [],
+
+    goal: [],
+
+    history: [],
+
+    selected: [],
+
+    moves: 0,
+
+    moveLimit: 0,
+
+    puzzle: 1,
+
+    totalScore: 0,
+
+    streak: 0,
+
+    solved: false,
+
+    finished: false,
+
+    timeLimit: 0,
+
+    timeLeft: 0,
+
+    timerID: null,
+
+    running: false
+
+};
+
+
+/* =====================================================
+   SEEDED RNG
+===================================================== */
+
+let seed = 927431;
+
+
+function random() {
+
+    seed =
+        (
+            seed * 1664525 +
+            1013904223
+        ) >>> 0;
+
+    return seed / 4294967296;
+
+}
+
+
+/* =====================================================
+   UTILITIES
+===================================================== */
+
+function clone(array) {
+
+    return array.slice();
+
+}
+
+
+function equalArray(a,b) {
+
+    if (a.length !== b.length)
+        return false;
+
+
+    for (
+        let i = 0;
+        i < a.length;
+        i++
+    ) {
+
+        if (a[i] !== b[i])
+            return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+function writeLog(
+    text,
+    type = ""
+) {
+
+    const div =
+        document.createElement(
+            "div"
         );
 
-        if (index === currentPage) {
-          page.classList.add("active");
 
-          if (direction === "next") {
-            page.classList.add("flip-next");
-          } else {
-            page.classList.add("flip-prev");
-          }
+    div.textContent =
+        text;
 
-          page.scrollTop = 0;
+
+    if (type)
+        div.classList.add(
+            type
+        );
+
+
+    logEl.prepend(
+        div
+    );
+
+}
+
+
+/* =====================================================
+   DIFFICULTY SELECTION
+===================================================== */
+
+difficultyButtons.forEach(
+    button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                difficultyButtons
+                    .forEach(
+                        b =>
+                            b.classList
+                                .remove(
+                                    "selected"
+                                )
+                    );
+
+
+                button.classList.add(
+                    "selected"
+                );
+
+
+                selectedDifficulty =
+                    Number(
+                        button.dataset.level
+                    );
+
+            }
+        );
+
+    }
+);
+
+
+/* =====================================================
+   START RUN
+===================================================== */
+
+startBtn.addEventListener(
+    "click",
+    startRun
+);
+
+
+function startRun() {
+
+    startScreen.style.display =
+        "none";
+
+
+    gameScreen.style.display =
+        "block";
+
+
+    game = {
+
+        array: [],
+
+        goal: [],
+
+        history: [],
+
+        selected: [],
+
+        moves: 0,
+
+        moveLimit: 0,
+
+        puzzle: 1,
+
+        totalScore: 0,
+
+        streak: 0,
+
+        solved: false,
+
+        finished: false,
+
+        timeLimit:
+            TIME_BY_LEVEL[
+                selectedDifficulty
+            ],
+
+        timeLeft:
+            TIME_BY_LEVEL[
+                selectedDifficulty
+            ],
+
+        timerID: null,
+
+        running: true
+
+    };
+
+
+    difficultyLabel.textContent =
+        ["","I","II","III","IV","V"]
+        [selectedDifficulty];
+
+
+    createPuzzle();
+
+    startTimer();
+
+}
+
+
+/* =====================================================
+   PUZZLE GENERATOR
+===================================================== */
+
+function createPuzzle() {
+
+    stopTimer();
+
+
+    const n =
+        SIZE_BY_LEVEL[
+            selectedDifficulty
+        ];
+
+
+    const depth =
+        DEPTH_BY_LEVEL[
+            selectedDifficulty
+        ];
+
+
+    const goal =
+        [];
+
+
+    for (
+        let i = 1;
+        i <= n;
+        i++
+    ) {
+
+        goal.push(i);
+
+    }
+
+
+    let current =
+        clone(goal);
+
+
+    /*
+        IMPORTANT:
+
+        We start from the solved state.
+
+        Then scramble it using valid
+        operations.
+
+        Therefore:
+
+        START → scramble → current
+
+        can always be reversed:
+
+        current → reverse scramble → GOAL
+
+        This prevents impossible puzzles.
+    */
+
+    for (
+        let step = 0;
+        step < depth;
+        step++
+    ) {
+
+        const operation =
+            Math.floor(
+                random() * 3
+            );
+
+
+        /* REVERSE */
+
+        if (
+            operation === 0
+        ) {
+
+            const left =
+                Math.floor(
+                    random() *
+                    (n - 1)
+                );
+
+
+            const right =
+                left +
+                1 +
+                Math.floor(
+                    random() *
+                    (n - left - 1)
+                );
+
+
+            const segment =
+                current
+                    .slice(
+                        left,
+                        right + 1
+                    )
+                    .reverse();
+
+
+            current.splice(
+                left,
+                right - left + 1,
+                ...segment
+            );
+
         }
-      });
 
-      prevBtn.disabled = currentPage === 0;
-      nextBtn.disabled = currentPage === pages.length - 1;
 
-      pageText.textContent =
-        `Halaman ${currentPage + 1} dari ${pages.length}`;
+        /* ROTATE */
 
-      const progress =
-        ((currentPage + 1) / pages.length) * 100;
+        else if (
+            operation === 1
+        ) {
 
-      progressBar.style.width = `${progress}%`;
+            const last =
+                current.pop();
 
-      // Tandai tombol daftar isi yang aktif
-      tocButtons.forEach((button) => {
-        button.classList.remove("active");
-      });
 
-      if (tocButtons[currentPage]) {
-        tocButtons[currentPage].classList.add("active");
-      }
+            current.unshift(
+                last
+            );
 
-      setTimeout(() => {
-        pages.forEach((page) => {
-          page.classList.remove("flip-next", "flip-prev");
-        });
+        }
 
-        isAnimating = false;
-      }, 850);
+
+        /* SWAP */
+
+        else {
+
+            let a =
+                Math.floor(
+                    random() * n
+                );
+
+
+            let b =
+                Math.floor(
+                    random() * n
+                );
+
+
+            if (a === b)
+                b =
+                    (b + 1) % n;
+
+
+            [
+                current[a],
+                current[b]
+            ] = [
+                current[b],
+                current[a]
+            ];
+
+        }
+
     }
 
-    function nextPage() {
-      if (
-        currentPage < pages.length - 1 &&
-        !isAnimating
-      ) {
-        currentPage++;
-        updatePage("next");
-      }
+
+    /*
+        Prevent accidental solved state.
+    */
+
+    if (
+        equalArray(
+            current,
+            goal
+        )
+    ) {
+
+        [
+            current[0],
+            current[1]
+        ] = [
+            current[1],
+            current[0]
+        ];
+
     }
 
-    function previousPage() {
-      if (
-        currentPage > 0 &&
-        !isAnimating
-      ) {
-        currentPage--;
-        updatePage("prev");
-      }
-    }
 
-    function goToPage(pageIndex) {
-      if (
-        pageIndex < 0 ||
-        pageIndex >= pages.length ||
-        pageIndex === currentPage ||
-        isAnimating
-      ) {
+    game.array =
+        current;
+
+
+    game.goal =
+        goal;
+
+
+    game.history =
+        [];
+
+
+    game.selected =
+        [];
+
+
+    game.moves =
+        0;
+
+
+    /*
+        Move limit is intentionally
+        slightly smaller than before.
+
+        But still leaves enough room
+        because the puzzle was generated
+        from legal operations.
+    */
+
+    game.moveLimit =
+        MOVE_LIMIT_BY_LEVEL[
+            selectedDifficulty
+        ];
+
+
+    game.solved =
+        false;
+
+
+    game.timeLimit =
+        TIME_BY_LEVEL[
+            selectedDifficulty
+        ];
+
+
+    game.timeLeft =
+        game.timeLimit;
+
+
+    logEl.innerHTML =
+        "";
+
+
+    writeLog(
+        "Puzzle " +
+        game.puzzle +
+        " / 5"
+    );
+
+
+    writeLog(
+        "Depth " +
+        depth +
+        " | Move limit " +
+        game.moveLimit
+    );
+
+
+    render();
+
+    startTimer();
+
+}
+
+
+/* =====================================================
+   RENDER
+===================================================== */
+
+function render() {
+
+    board.innerHTML =
+        "";
+
+
+    game.array.forEach(
+        (value,index) => {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.className =
+                "tile";
+
+
+            button.type =
+                "button";
+
+
+            button.textContent =
+                value;
+
+
+            if (
+                game.selected
+                    .includes(index)
+            ) {
+
+                button.classList.add(
+                    "selected"
+                );
+
+            }
+
+
+            if (
+                value ===
+                game.goal[index]
+            ) {
+
+                button.classList.add(
+                    "correct"
+                );
+
+            }
+
+
+            button.addEventListener(
+                "click",
+                () =>
+                    selectTile(index)
+            );
+
+
+            board.appendChild(
+                button
+            );
+
+        }
+    );
+
+
+    puzzleEl.textContent =
+        game.puzzle +
+        " / 5";
+
+
+    movesEl.textContent =
+        game.moves;
+
+
+    limitEl.textContent =
+        game.moveLimit;
+
+
+    scoreEl.textContent =
+        game.totalScore;
+
+
+    streakEl.textContent =
+        game.streak;
+
+
+    nextBtn.disabled =
+        !game.solved;
+
+
+    undoBtn.disabled =
+        game.history.length === 0;
+
+
+    reverseBtn.disabled =
+        game.selected.length < 2;
+
+
+    swapBtn.disabled =
+        game.selected.length !== 2;
+
+
+    updateTimerUI();
+
+}
+
+
+/* =====================================================
+   SELECT TILE
+===================================================== */
+
+function selectTile(index) {
+
+    if (
+        game.solved ||
+        !game.running
+    )
         return;
-      }
 
-      const direction =
-        pageIndex > currentPage ? "next" : "prev";
 
-      currentPage = pageIndex;
-      updatePage(direction);
+    if (
+        game.selected
+            .includes(index)
+    ) {
+
+        game.selected =
+            game.selected.filter(
+                x => x !== index
+            );
+
     }
 
-    /* =========================
-       KEYBOARD NAVIGATION
-    ========================= */
+    else {
 
-    document.addEventListener("keydown", function(event) {
-      if (event.key === "ArrowRight") {
-        nextPage();
-      }
+        game.selected.push(
+            index
+        );
 
-      if (event.key === "ArrowLeft") {
-        previousPage();
-      }
+    }
 
-      if (event.key === "Home") {
-        goToPage(0);
-      }
 
-      if (event.key === "End") {
-        goToPage(pages.length - 1);
-      }
-    });
+    game.selected.sort(
+        (a,b) => a-b
+    );
 
-    /* =========================
-       SWIPE DI HP
-    ========================= */
 
-    const book = document.querySelector(".book");
+    render();
 
-    let touchStartX = 0;
-    let touchEndX = 0;
+}
 
-    book.addEventListener("touchstart", function(event) {
-      touchStartX = event.changedTouches[0].screenX;
-    }, { passive: true });
 
-    book.addEventListener("touchend", function(event) {
-      touchEndX = event.changedTouches[0].screenX;
-      handleSwipe();
-    }, { passive: true });
+/* =====================================================
+   SAVE
+===================================================== */
 
-    function handleSwipe() {
-      const distance = touchEndX - touchStartX;
+function saveState() {
 
-      if (Math.abs(distance) < 50) {
+    game.history.push(
+        clone(game.array)
+    );
+
+
+    game.moves++;
+
+}
+
+
+/* =====================================================
+   REVERSE
+===================================================== */
+
+reverseBtn.addEventListener(
+    "click",
+    reverseSelected
+);
+
+
+function reverseSelected() {
+
+    if (
+        game.selected.length < 2
+    ) {
+
+        writeLog(
+            "REVERSE needs at least 2 tiles.",
+            "bad"
+        );
+
         return;
-      }
 
-      if (distance < 0) {
-        nextPage();
-      } else {
-        previousPage();
-      }
     }
 
-    /* Inisialisasi tampilan */
-    updatePage("next");
-  </script>
+
+    const first =
+        game.selected[0];
+
+
+    const last =
+        game.selected[
+            game.selected.length - 1
+        ];
+
+
+    /*
+        Must be contiguous.
+    */
+
+    if (
+        game.selected.length !==
+        last - first + 1
+    ) {
+
+        writeLog(
+            "Selected tiles must be contiguous.",
+            "bad"
+        );
+
+        return;
+
+    }
+
+
+    if (
+        game.moves >=
+        game.moveLimit
+    )
+        return;
+
+
+    saveState();
+
+
+    const segment =
+        game.array
+            .slice(
+                first,
+                last + 1
+            )
+            .reverse();
+
+
+    game.array.splice(
+        first,
+        last - first + 1,
+        ...segment
+    );
+
+
+    writeLog(
+        "REVERSE " +
+        (first + 1) +
+        ".." +
+        (last + 1)
+    );
+
+
+    game.selected =
+        [];
+
+
+    evaluate();
+
+}
+
+
+/* =====================================================
+   ROTATE
+===================================================== */
+
+rotateBtn.addEventListener(
+    "click",
+    rotateRight
+);
+
+
+function rotateRight() {
+
+    if (
+        game.moves >=
+        game.moveLimit
+    )
+        return;
+
+
+    saveState();
+
+
+    const last =
+        game.array.pop();
+
+
+    game.array.unshift(
+        last
+    );
+
+
+    game.selected =
+        [];
+
+
+    writeLog(
+        "ROTATE RIGHT"
+    );
+
+
+    evaluate();
+
+}
+
+
+/* =====================================================
+   SWAP
+===================================================== */
+
+swapBtn.addEventListener(
+    "click",
+    swapSelected
+);
+
+
+function swapSelected() {
+
+    if (
+        game.selected.length !== 2
+    ) {
+
+        writeLog(
+            "SWAP needs exactly 2 tiles.",
+            "bad"
+        );
+
+        return;
+
+    }
+
+
+    if (
+        game.moves >=
+        game.moveLimit
+    )
+        return;
+
+
+    saveState();
+
+
+    const a =
+        game.selected[0];
+
+
+    const b =
+        game.selected[1];
+
+
+    [
+        game.array[a],
+        game.array[b]
+    ] = [
+        game.array[b],
+        game.array[a]
+    ];
+
+
+    writeLog(
+        "SWAP " +
+        (a + 1) +
+        " ↔ " +
+        (b + 1)
+    );
+
+
+    game.selected =
+        [];
+
+
+    evaluate();
+
+}
+
+
+/* =====================================================
+   UNDO
+===================================================== */
+
+undoBtn.addEventListener(
+    "click",
+    undo
+);
+
+
+function undo() {
+
+    if (
+        game.history.length === 0
+    )
+        return;
+
+
+    game.array =
+        game.history.pop();
+
+
+    game.moves--;
+
+
+    game.selected =
+        [];
+
+
+    writeLog(
+        "UNDO"
+    );
+
+
+    render();
+
+}
+
+
+/* =====================================================
+   EVALUATE
+===================================================== */
+
+function evaluate() {
+
+    if (
+        equalArray(
+            game.array,
+            game.goal
+        )
+    ) {
+
+        solvePuzzle();
+
+        return;
+
+    }
+
+
+    if (
+        game.moves >=
+        game.moveLimit
+    ) {
+
+        failPuzzle(
+            "MOVE LIMIT HABIS"
+        );
+
+        return;
+
+    }
+
+
+    render();
+
+}
+
+
+/* =====================================================
+   TIMER
+===================================================== */
+
+function startTimer() {
+
+    stopTimer();
+
+
+    game.running =
+        true;
+
+
+    game.timeLeft =
+        game.timeLimit;
+
+
+    updateTimerUI();
+
+
+    game.timerID =
+        setInterval(
+            () => {
+
+                if (
+                    !game.running
+                )
+                    return;
+
+
+                game.timeLeft -=
+                    0.1;
+
+
+                if (
+                    game.timeLeft <= 0
+                ) {
+
+                    game.timeLeft =
+                        0;
+
+
+                    updateTimerUI();
+
+
+                    failPuzzle(
+                        "WAKTU HABIS"
+                    );
+
+
+                    return;
+
+                }
+
+
+                updateTimerUI();
+
+            },
+            100
+        );
+
+}
+
+
+function stopTimer() {
+
+    if (
+        game.timerID !== null
+    ) {
+
+        clearInterval(
+            game.timerID
+        );
+
+
+        game.timerID =
+            null;
+
+    }
+
+}
+
+
+function updateTimerUI() {
+
+    const seconds =
+        Math.max(
+            0,
+            game.timeLeft
+        );
+
+
+    timerEl.textContent =
+        seconds.toFixed(1);
+
+
+    const percentage =
+        (
+            seconds /
+            game.timeLimit
+        ) * 100;
+
+
+    timeBar.style.width =
+        percentage + "%";
+
+
+    timerEl.classList.remove(
+        "timer-normal",
+        "timer-warning",
+        "timer-danger"
+    );
+
+
+    timeBar.style.background =
+        "var(--accent)";
+
+
+    if (
+        seconds <= 5
+    ) {
+
+        timerEl.classList.add(
+            "timer-danger"
+        );
+
+
+        timeBar.style.background =
+            "var(--danger)";
+
+    }
+
+    else if (
+        seconds <= 10
+    ) {
+
+        timerEl.classList.add(
+            "timer-warning"
+        );
+
+
+        timeBar.style.background =
+            "var(--gold)";
+
+    }
+
+    else {
+
+        timerEl.classList.add(
+            "timer-normal"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   SCORING
+===================================================== */
+
+function calculateScore() {
+
+    /*
+        Base.
+    */
+
+    let points =
+        100;
+
+
+    /*
+        Difficulty bonus.
+    */
+
+    points +=
+        selectedDifficulty *
+        40;
+
+
+    /*
+        Remaining time.
+
+        More remaining time =
+        more points.
+
+        But not ridiculously large.
+    */
+
+    points +=
+        Math.round(
+            game.timeLeft * 8
+        );
+
+
+    /*
+        Move efficiency.
+
+        More unused moves =
+        bonus.
+
+        This rewards solving
+        without unnecessary moves.
+    */
+
+    const unusedMoves =
+        Math.max(
+            0,
+            game.moveLimit -
+            game.moves
+        );
+
+
+    points +=
+        unusedMoves * 15;
+
+
+    /*
+        Streak bonus.
+    */
+
+    points +=
+        Math.min(
+            game.streak * 25,
+            150
+        );
+
+
+    return points;
+
+}
+
+
+/* =====================================================
+   SOLVE
+===================================================== */
+
+function solvePuzzle() {
+
+    if (
+        game.solved
+    )
+        return;
+
+
+    game.solved =
+        true;
+
+
+    game.running =
+        false;
+
+
+    stopTimer();
+
+
+    game.streak++;
+
+
+    const gained =
+        calculateScore();
+
+
+    game.totalScore +=
+        gained;
+
+
+    writeLog(
+        "SOLVED +" +
+        gained,
+        "good"
+    );
+
+
+    render();
+
+
+    if (
+        game.puzzle >= 5
+    ) {
+
+        finishRun(
+            gained
+        );
+
+        return;
+
+    }
+
+
+    modalTitle.textContent =
+        "PUZZLE " +
+        game.puzzle +
+        " COMPLETE";
+
+
+    finalScore.textContent =
+        "+" +
+        gained;
+
+
+    resultText.innerHTML =
+        "Time left: " +
+        game.timeLeft.toFixed(1) +
+        "s<br>" +
+
+        "Moves: " +
+        game.moves +
+        " / " +
+        game.moveLimit +
+        "<br>" +
+
+        "Streak: " +
+        game.streak;
+
+
+    modalNext.textContent =
+        "NEXT PUZZLE";
+
+
+    overlay.classList.add(
+        "show"
+    );
+
+}
+
+
+/* =====================================================
+   FAILURE
+===================================================== */
+
+function failPuzzle(reason) {
+
+    if (
+        !game.running
+    )
+        return;
+
+
+    game.running =
+        false;
+
+
+    stopTimer();
+
+
+    game.streak =
+        0;
+
+
+    writeLog(
+        reason,
+        "bad"
+    );
+
+
+    /*
+        No score is added.
+
+        Puzzle is considered failed.
+    */
+
+    modalTitle.textContent =
+        "PUZZLE FAILED";
+
+
+    finalScore.textContent =
+        "+0";
+
+
+    resultText.innerHTML =
+        reason +
+        "<br><br>" +
+
+        "Puzzle akan diulang.";
+
+
+    modalNext.textContent =
+        "RETRY";
+
+
+    overlay.classList.add(
+        "show"
+    );
+
+}
+
+
+/* =====================================================
+   NEXT / RETRY
+===================================================== */
+
+modalNext.addEventListener(
+    "click",
+    () => {
+
+        overlay.classList.remove(
+            "show"
+        );
+
+
+        if (
+            game.solved
+        ) {
+
+            game.puzzle++;
+
+
+        }
+
+
+        /*
+            Failed puzzle:
+            puzzle number stays the same.
+        */
+
+        createPuzzle();
+
+    }
+);
+
+
+/* =====================================================
+   NEXT BUTTON
+===================================================== */
+
+nextBtn.addEventListener(
+    "click",
+    () => {
+
+        if (
+            !game.solved
+        )
+            return;
+
+
+        if (
+            game.puzzle >= 5
+        )
+            return;
+
+
+        game.puzzle++;
+
+
+        createPuzzle();
+
+    }
+);
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+resetBtn.addEventListener(
+    "click",
+    () => {
+
+        if (
+            !game.running
+        )
+            return;
+
+
+        game.streak =
+            0;
+
+
+        game.totalScore =
+            Math.max(
+                0,
+                game.totalScore - 25
+            );
+
+
+        writeLog(
+            "RESET -25 SCORE",
+            "bad"
+        );
+
+
+        createPuzzle();
+
+    }
+);
+
+
+/* =====================================================
+   FINISH RUN
+===================================================== */
+
+function finishRun(
+    lastGain
+) {
+
+    game.finished =
+        true;
+
+
+    game.running =
+        false;
+
+
+    stopTimer();
+
+
+    modalTitle.textContent =
+        "RUN COMPLETE";
+
+
+    finalScore.textContent =
+        game.totalScore;
+
+
+    resultText.innerHTML =
+        "<strong>5 PUZZLES COMPLETED</strong><br><br>" +
+
+        "Difficulty: " +
+        ["","I","II","III","IV","V"]
+        [selectedDifficulty] +
+
+        "<br>" +
+
+        "Final streak: " +
+        game.streak +
+
+        "<br><br>" +
+
+        "Total score dihitung dari<br>" +
+        "difficulty + time + move efficiency + streak.";
+
+
+    modalNext.textContent =
+        "MAIN LAGI";
+
+
+    overlay.classList.add(
+        "show"
+    );
+
+
+    /*
+        Change button behavior
+        for restart.
+    */
+
+    modalNext.onclick =
+        restartRun;
+
+}
+
+
+function restartRun() {
+
+    overlay.classList.remove(
+        "show"
+    );
+
+
+    startScreen.style.display =
+        "flex";
+
+
+    gameScreen.style.display =
+        "none";
+
+
+    modalNext.onclick =
+        null;
+
+}
+
+
+/* =====================================================
+   KEYBOARD SHORTCUT
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            gameScreen.style.display ===
+            "none"
+        )
+            return;
+
+
+        if (
+            event.key === "z" ||
+            event.key === "Z"
+        ) {
+
+            undo();
+
+        }
+
+    }
+);
+
+</script>
+
 </body>
 </html>
